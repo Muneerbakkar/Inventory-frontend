@@ -55,37 +55,29 @@ export const Login = () => {
 
           <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-5">
             <div className="space-y-1.5">
-              <div className="relative">
-                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                  <Mail className="h-4 w-4 text-muted-foreground" />
-                </div>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="admin@example.com"
-                  className="pl-10 h-11"
-                  {...register("email", { required: "Email is required" })}
-                />
-              </div>
+              <Input
+                id="email"
+                type="email"
+                placeholder="Email address"
+                className="h-12 bg-transparent border-white/10 text-foreground placeholder:text-muted-foreground/70 rounded-md px-4"
+                {...register("email", { required: "Email is required" })}
+              />
               {errors.email && <p className="text-xs text-destructive">{errors.email.message}</p>}
             </div>
 
             <div className="space-y-1.5">
               <div className="relative">
-                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                  <Lock className="h-4 w-4 text-muted-foreground" />
-                </div>
                 <Input
                   id="password"
                   type={showPassword ? "text" : "password"}
-                  placeholder="••••••••"
-                  className="pl-10 h-11 pr-10"
+                  placeholder="Password"
+                  className="h-12 bg-transparent border-white/10 text-foreground placeholder:text-muted-foreground/70 rounded-md px-4 pr-10"
                   {...register("password", { required: "Password is required" })}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 flex items-center pr-3 text-muted-foreground hover:text-foreground"
+                  className="absolute inset-y-0 right-0 flex items-center pr-4 text-muted-foreground hover:text-foreground"
                 >
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
