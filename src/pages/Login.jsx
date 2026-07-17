@@ -32,9 +32,8 @@ export const Login = () => {
       {/* Left Panel: Login Form */}
       <div className="flex w-full flex-col justify-center px-4 py-12 sm:px-12 md:px-24 lg:w-[55%] xl:px-32">
         <div className="mx-auto w-full max-w-md">
-          {/* Logo Section */}
           <div className="mb-10 flex items-center gap-2">
-            <img src="/logo.png" alt="INVENQ logo" className="h-10 w-10 dark:invert" />
+            <img src="/logo.png" alt="INVENQ logo" className="h-10 w-10 rounded-md" />
             <span className="text-2xl font-bold tracking-tight">INVENQ</span>
           </div>
 
@@ -192,8 +191,8 @@ export const Login = () => {
               </div>
             </div>
 
-            <div className="absolute right-4 top-1/2 -translate-y-1/2 flex h-14 w-14 items-center justify-center rounded-xl bg-background text-primary shadow-xl rotate-3 transform transition-transform hover:rotate-6">
-              <img src="/logo.png" alt="INVENQ logo" className="h-7 w-7 dark:invert" />
+            <div className="absolute right-4 top-1/2 -translate-y-1/2 rotate-3 transform transition-transform hover:rotate-6 shadow-xl rounded-xl overflow-hidden">
+              <img src="/logo.png" alt="INVENQ logo" className="h-14 w-14 object-cover" />
             </div>
 
           </div>
