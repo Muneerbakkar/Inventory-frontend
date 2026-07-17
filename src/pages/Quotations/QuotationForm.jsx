@@ -1,7 +1,7 @@
 import { useState, useMemo, useRef, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetProductsQuery } from "../../features/products/productApi";
-import { useGetCustomersQuery } from "../../features/customers/customersApi";
+import { useGetCustomersQuery, useCreateCustomerMutation } from "../../features/customers/customersApi";
 import { useCreateQuotationMutation, useGetQuotationByIdQuery, useUpdateQuotationMutation } from "../../features/quotations/quotationsApi";
 import { Button } from "../../components/ui/Button";
 import { Input } from "../../components/ui/Input";
@@ -17,12 +17,22 @@ export const QuotationForm = () => {
   const { data: quotationData, isLoading: isLoadingQuotation } = useGetQuotationByIdQuery(id, { skip: !isEdit });
   const [createQuotation, { isLoading: isCreating }] = useCreateQuotationMutation();
   const [updateQuotation, { isLoading: isUpdating }] = useUpdateQuotationMutation();
+  const [createCustomer] = useCreateCustomerMutation();
   const isSubmitting = isCreating || isUpdating;
 
   const [customerId, setCustomerId] = useState("");
   const [customerName, setCustomerName] = useState("");
   const [validTillDate, setValidTillDate] = useState("");
   const dateRef = useRef(null);
+
+  const handleAddCustomer = async (name) => {
+    try {
+      const res = await createCustomer({ name }).unwrap();
+      toast.success("Customer added");
+      setCustomerId(res.data?.customer?._id || res.customer?._id || res._id);
+      setCustomerName(res.data?.customer?.name || res.customer?.name || res.name || name);
+    } catch (err) { toast.error("Failed to add customer"); }
+  };
 
   const [items, setItems] = useState([
     { productId: "", productName: "", quantity: 1, sellingPrice: 0, gstPercent: 0 }

@@ -1,3 +1,4 @@
+import { PaginationControls } from "../../components/ui/PaginationControls";
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Plus, Edit, Trash2, Search, Eye, Calendar } from "lucide-react";
@@ -210,38 +211,13 @@ export const SupplierList = () => {
       </div>
       
       {data?.pagination && data.pagination.pages > 1 && (
-        <div className="flex items-center justify-end space-x-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setPage((p) => Math.max(1, p - 1))}
-            disabled={page === 1}
-          >
-            Previous
-          </Button>
-                    <div className="flex items-center gap-1">
-            {Array.from({ length: data.pagination.pages }, (_, i) => i + 1).map((p) => (
-              <Button
-                key={p}
-                variant={p === page ? "default" : "outline"}
-                size="sm"
-                className="h-8 w-8 p-0 cursor-pointer"
-                onClick={() => setPage(p)}
-              >
-                {p}
-              </Button>
-            ))}
-          </div>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setPage((p) => p + 1)}
-            disabled={page === data.pagination.pages}
-          >
-            Next
-          </Button>
-        </div>
+        <PaginationControls 
+            currentPage={page}
+            totalPages={data.pagination.pages}
+            onPageChange={setPage}
+          />
       )}
     </div>
   );
 };
+

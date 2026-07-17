@@ -1,3 +1,4 @@
+import { PaginationControls } from "../../components/ui/PaginationControls";
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGetQuotationsQuery, useConvertToInvoiceMutation, useDeleteQuotationMutation, useUpdateQuotationStatusMutation } from "../../features/quotations/quotationsApi";
@@ -264,38 +265,13 @@ export const QuotationList = () => {
       </div>
 
       {quotationsData?.pagination && quotationsData.pagination.pages > 1 && (
-        <div className="flex items-center justify-end space-x-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setPage((p) => Math.max(1, p - 1))}
-            disabled={page === 1}
-          >
-            Previous
-          </Button>
-                    <div className="flex items-center gap-1">
-            {Array.from({ length: quotationsData.pagination.pages }, (_, i) => i + 1).map((p) => (
-              <Button
-                key={p}
-                variant={p === page ? "default" : "outline"}
-                size="sm"
-                className="h-8 w-8 p-0 cursor-pointer"
-                onClick={() => setPage(p)}
-              >
-                {p}
-              </Button>
-            ))}
-          </div>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setPage((p) => p + 1)}
-            disabled={page === quotationsData.pagination.pages}
-          >
-            Next
-          </Button>
-        </div>
+        <PaginationControls 
+            currentPage={page}
+            totalPages={quotationsData.pagination.pages}
+            onPageChange={setPage}
+          />
       )}
     </div>
   );
 };
+

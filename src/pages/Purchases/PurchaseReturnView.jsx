@@ -1,8 +1,10 @@
+import { useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useGetPurchaseReturnByIdQuery } from "../../features/purchases/purchasesApi";
 import { Button } from "../../components/ui/Button";
 import { Printer } from "lucide-react";
 import { BackButton } from "../../components/ui/BackButton";
+import { PaginationControls } from "../../components/ui/PaginationControls";
 
 export const PurchaseReturnView = () => {
   const { id } = useParams();
@@ -11,8 +13,23 @@ export const PurchaseReturnView = () => {
   const pr = data?.data?.purchaseReturn;
   const settings = data?.data?.settings;
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 20;
+  const tableRef = useRef(null);
+
   if (isLoading) return <div className="flex h-60 items-center justify-center text-muted-foreground">Loading...</div>;
   if (!pr) return <div className="p-8 text-center text-red-500">Purchase Return not found</div>;
+
+  const handlePageChange = (page) => {
+    if (page === '...') return;
+    setCurrentPage(page);
+    setTimeout(() => {
+      tableRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  };
+
+  const totalPages = Math.ceil(pr.items.length / itemsPerPage);
+  const paginatedItems = pr.items.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   return (
     <div className="space-y-4 max-w-[794px] mx-auto pb-8 print:max-w-none print:mx-0 print:pb-0 print:space-y-0 print:min-h-[99vh] print:flex print:flex-col">
@@ -23,15 +40,15 @@ export const PurchaseReturnView = () => {
         </Button>
       </div>
 
-      <div className="w-full overflow-x-auto pb-4 print:pb-0 print:overflow-visible">
-        <div className="min-w-[794px] flex justify-center print:min-w-0 print:block">
+      <div className="w-full overflow-x-auto pb-4 print:pb-0 print:overflow-visible print:flex-1 print:flex print:flex-col">
+        <div className="min-w-[794px] flex justify-center print:min-w-0 print:flex-1 print:flex print:flex-col">
           <div className="bg-white text-black p-4 rounded-lg shadow-sm border print:shadow-none print:border-none print:p-0 print:bg-transparent print:flex-1 print:flex print:flex-col w-[794px] print:w-auto">
         
         {/* PDF-like Outer Border Wrapper */}
         <div className="p-6 border border-gray-300 print:border-none flex flex-col min-h-[700px] print:min-h-0 print:flex-1">
           
           {/* Header */}
-          <div className="flex flex-row justify-between items-start pb-4">
+          <div className="flex flex-row justify-between items-start pb-4 print:break-inside-avoid">
             <div className="space-y-0.5 text-xs text-gray-800">
               <div className="flex flex-col items-start gap-2 mb-3">
                 <img src="/logo.png" alt="Logo" className="h-16 w-16 rounded-md" />
@@ -78,7 +95,7 @@ export const PurchaseReturnView = () => {
           <div className="h-px bg-gray-300 w-full mb-4"></div>
 
           {/* Addresses */}
-          <div className="pb-4">
+          <div className="pb-4 print:break-inside-avoid">
             <div className="text-xs">
               <h3 className="font-bold text-sm mb-2 border-b border-gray-200 pb-1 w-1/2">Returned To Supplier</h3>
               {pr.supplierId ? (
@@ -108,8 +125,61 @@ export const PurchaseReturnView = () => {
             </div>
           </div>
 
-          {/* Product Details Table */}
-          <div className="mt-2">
+          {/* Product Details Table (SCREEN ONLY - PAGINATED) */}
+          <div className="mt-2 print:hidden" ref={tableRef}>
+            <h3 className="font-bold text-sm mb-2">Product Details</h3>
+            <div className="min-h-[400px]">
+              <table className="w-full border-collapse border border-gray-300 text-xs text-left">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="border border-gray-300 p-1.5 font-bold">Product Name</th>
+                    <th className="border border-gray-300 p-1.5 font-bold text-center w-20">Return Qty</th>
+                    <th className="border border-gray-300 p-1.5 font-bold text-right w-24">Price (Rs)</th>
+                    <th className="border border-gray-300 p-1.5 font-bold text-center w-16">GST %</th>
+                    <th className="border border-gray-300 p-1.5 font-bold text-right w-28">Total (Rs)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {paginatedItems.map((item, i) => (
+                    <tr key={i} className="print:break-inside-avoid">
+                      <td className="border border-gray-300 p-1.5">
+                        <div className="font-semibold">{item.productId?.name || 'Unknown Product'}</div>
+                      </td>
+                      <td className="border border-gray-300 p-1.5 text-center">{item.quantity}</td>
+                      <td className="border border-gray-300 p-1.5 text-right">{item.purchasePrice.toFixed(2)}</td>
+                      <td className="border border-gray-300 p-1.5 text-center">{item.gstPercent}%</td>
+                      <td className="border border-gray-300 p-1.5 text-right font-medium">
+                        {(item.lineTotal).toFixed(2)}
+                      </td>
+                    </tr>
+                  ))}
+                  {paginatedItems.length === 0 && (
+                    <tr>
+                      <td colSpan={5} className="border border-gray-300 p-4 text-center text-gray-500">No items found.</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+            
+            {/* Pagination Controls */}
+            {totalPages > 1 && (
+              <div className="flex items-center justify-between mt-4 border-t pt-4">
+                <span className="text-sm text-gray-600">
+                  Showing {(currentPage - 1) * itemsPerPage + 1} to {Math.min(currentPage * itemsPerPage, pr.items.length)} of {pr.items.length} entries
+                </span>
+                <PaginationControls 
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={handlePageChange}
+                  theme="dark"
+                />
+              </div>
+            )}
+          </div>
+
+          {/* Product Details Table (PRINT ONLY - ALL ITEMS) */}
+          <div className="mt-2 hidden print:block">
             <h3 className="font-bold text-sm mb-2">Product Details</h3>
             <table className="w-full border-collapse border border-gray-300 text-xs text-left">
               <thead className="bg-gray-50">
@@ -123,7 +193,7 @@ export const PurchaseReturnView = () => {
               </thead>
               <tbody>
                 {pr.items.map((item, i) => (
-                  <tr key={i}>
+                  <tr key={i} className="print:break-inside-avoid">
                     <td className="border border-gray-300 p-1.5">
                       <div className="font-semibold">{item.productId?.name || 'Unknown Product'}</div>
                     </td>
@@ -140,7 +210,7 @@ export const PurchaseReturnView = () => {
           </div>
 
           {/* Charges Summary Table */}
-          <div className="mt-4">
+          <div className="mt-4 print:break-inside-avoid">
             <h3 className="font-bold text-sm mb-2">Refund Summary</h3>
             <table className="w-full border-collapse border border-gray-300 text-xs text-left">
               <tbody>
@@ -171,9 +241,9 @@ export const PurchaseReturnView = () => {
           </div>
 
           {/* Terms & Conditions */}
-          <div className="mt-4 flex flex-row gap-8">
+          <div className="mt-4 flex flex-row gap-8 print:break-inside-avoid">
             <div className="flex-1 space-y-4">
-              <div>
+              <div className="print:break-inside-avoid">
                 <h3 className="font-bold text-sm mb-1">Terms & Conditions:</h3>
                 <ol className="text-[10px] leading-tight space-y-1 text-gray-800 list-decimal pl-4">
                   <li>Goods returned as per mutual agreement/authorization.</li>
@@ -186,7 +256,7 @@ export const PurchaseReturnView = () => {
           </div>
 
           {/* Signatures */}
-          <div className="mt-auto pt-16 flex justify-between items-end pb-2 print:pb-0">
+          <div className="mt-auto pt-16 flex justify-between items-end pb-2 print:pb-0 print:break-inside-avoid">
             <div className="w-48">
               <div className="border-t border-gray-400 pt-1 text-center text-xs font-semibold">
                 Supplier Signature
