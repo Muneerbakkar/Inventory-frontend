@@ -133,7 +133,7 @@ export const Login = () => {
       {/* Right Panel: Feature Graphic */}
       {/* Right Panel: Feature Graphic */}
       <div className="hidden lg:flex lg:w-[45%] p-4">
-        <div className="relative flex w-full h-full flex-col justify-end overflow-hidden rounded-[2rem] bg-muted shadow-2xl">
+        <div className="relative flex w-full h-full flex-col justify-end overflow-hidden rounded-[2rem] bg-[#000047] shadow-2xl">
           
           {/* Background Decorative Circles */}
           <div className="absolute -top-24 -right-24 h-96 w-96 rounded-full bg-foreground/5 blur-3xl"></div>
