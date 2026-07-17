@@ -187,7 +187,7 @@ export const NewSale = () => {
   };
 
   return (
-    <div className="h-8 w-8 p-0 text-red-600 hover:text-red-700 hover:bg-red-50">
+    <div className="space-y-6 pb-12">
       <div className="flex items-center gap-3">
         <BackButton to="/sales" />
         <span className="text-muted-foreground">/</span>
