@@ -306,27 +306,29 @@ export const NewSale = () => {
             </div>
 
             <div className="mt-6 space-y-4">
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Payment Mode</label>
-                <select 
-                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-                  value={paymentMode}
-                  onChange={(e) => setPaymentMode(e.target.value)}
-                >
-                  <option value="Cash">Cash</option>
-                  <option value="UPI">UPI</option>
-                  <option value="Card">Card</option>
-                  <option value="Bank Transfer">Bank Transfer</option>
-                </select>
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Amount Paid (₹)</label>
-                <Input 
-                  type="number" 
-                  placeholder={grandTotal.toFixed(2)} 
-                  value={amountPaid} 
-                  onChange={(e) => setAmountPaid(e.target.value)} 
-                />
+              <div className="flex flex-col sm:flex-row gap-4">
+                <div className="flex-1 space-y-2">
+                  <label className="text-sm font-medium">Payment Mode</label>
+                  <select 
+                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                    value={paymentMode}
+                    onChange={(e) => setPaymentMode(e.target.value)}
+                  >
+                    <option value="Cash">Cash</option>
+                    <option value="UPI">UPI</option>
+                    <option value="Card">Card</option>
+                    <option value="Bank Transfer">Bank Transfer</option>
+                  </select>
+                </div>
+                <div className="flex-1 space-y-2">
+                  <label className="text-sm font-medium">Amount Paid (₹)</label>
+                  <Input 
+                    type="number" 
+                    placeholder={grandTotal.toFixed(2)} 
+                    value={amountPaid} 
+                    onChange={(e) => setAmountPaid(e.target.value)} 
+                  />
+                </div>
               </div>
               <div className="flex justify-between items-center text-sm font-medium text-orange-500 pt-2">
                 <span>Balance Due:</span>
@@ -334,10 +336,12 @@ export const NewSale = () => {
               </div>
             </div>
 
-            <Button className="w-full mt-6" onClick={onSubmit} disabled={isSubmitting}>
-              <Save className="mr-2 h-4 w-4" />
-              {isEditing ? "Update Sale" : "Complete Sale"}
-            </Button>
+            <div className="flex justify-end mt-6">
+              <Button onClick={onSubmit} disabled={isSubmitting}>
+                <Save className="mr-2 h-4 w-4" />
+                {isEditing ? "Update Sale" : "Complete Sale"}
+              </Button>
+            </div>
                   </div>
                 </div>
         </div>
