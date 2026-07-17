@@ -178,7 +178,7 @@ export const Dashboard = () => {
     purchases: { border: 'hover:border-indigo-500/50', iconBg: 'bg-indigo-50 text-indigo-600 dark:bg-indigo-950/30 dark:text-indigo-400' },
     outstanding: { border: 'hover:border-amber-500/50', iconBg: 'bg-amber-50 text-amber-600 dark:bg-amber-950/30 dark:text-amber-400' },
     commission: { border: 'hover:border-purple-500/50', iconBg: 'bg-purple-50 text-purple-600 dark:bg-purple-950/30 dark:text-purple-400' },
-    products: { border: 'hover:border-slate-500/50', iconBg: 'bg-slate-50 text-slate-600 dark:bg-slate-950/30 dark:text-slate-400' },
+    products: { border: 'hover:border-pink-500/50 hover:bg-pink-500/5', iconBg: 'bg-pink-50 text-pink-600 dark:bg-pink-950/30 dark:text-pink-400' },
     customers: { border: 'hover:border-sky-500/50', iconBg: 'bg-sky-50 text-sky-600 dark:bg-sky-950/30 dark:text-sky-400' },
     suppliers: { border: 'hover:border-orange-500/50', iconBg: 'bg-orange-50 text-orange-600 dark:bg-orange-950/30 dark:text-orange-400' },
     lowStock: { border: 'hover:border-red-500/50', iconBg: 'bg-red-50 text-red-600 dark:bg-red-950/30 dark:text-red-400' },
