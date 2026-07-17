@@ -49,7 +49,7 @@ export const Reports = () => {
       query.append('page', page);
       query.append('limit', 10);
 
-      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/reports/${tabConfig.endpoint}?${query.toString()}`, {
+      const res = await fetch(`${(import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/+$/, '')}/api/reports/${tabConfig.endpoint}?${query.toString()}`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token') || ''}`
         },
@@ -86,7 +86,7 @@ export const Reports = () => {
       query.append('page', 1);
       query.append('limit', 10000);
 
-      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/reports/${tabConfig.endpoint}?${query.toString()}`, {
+      const res = await fetch(`${(import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/+$/, '')}/api/reports/${tabConfig.endpoint}?${query.toString()}`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token') || ''}`
         },

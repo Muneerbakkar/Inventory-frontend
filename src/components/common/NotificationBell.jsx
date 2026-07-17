@@ -24,7 +24,7 @@ export const NotificationBell = () => {
   const fetchNotifications = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/notifications`, {
+      const res = await fetch(`${(import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/+$/, '')}/api/notifications`, {
         headers: {
           'Authorization': `Bearer ${token || ''}`
         }

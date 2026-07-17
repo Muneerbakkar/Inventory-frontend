@@ -21,7 +21,7 @@ export const CompanySettings = () => {
 
   const fetchSettings = async () => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/settings`, {
+      const res = await fetch(`${(import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/+$/, '')}/api/settings`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token') || ''}`
         }
@@ -39,7 +39,7 @@ export const CompanySettings = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/settings`, {
+      await fetch(`${(import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/+$/, '')}/api/settings`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

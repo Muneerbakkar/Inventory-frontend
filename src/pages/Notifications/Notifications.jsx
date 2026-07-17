@@ -40,7 +40,7 @@ export const Notifications = () => {
         page,
         limit: 10
       });
-      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/notifications?${queryParams}`, {
+      const res = await fetch(`${(import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/+$/, '')}/api/notifications?${queryParams}`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -67,7 +67,7 @@ export const Notifications = () => {
   const handleMarkAsRead = async (id) => {
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/notifications/${id}/read`, {
+      const res = await fetch(`${(import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/+$/, '')}/api/notifications/${id}/read`, {
         method: 'PATCH',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -94,7 +94,7 @@ export const Notifications = () => {
       const token = localStorage.getItem('token');
       await Promise.all(
         unread.map(n =>
-          fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/notifications/${n._id}/read`, {
+          fetch(`${(import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/+$/, '')}/api/notifications/${n._id}/read`, {
             method: 'PATCH',
             headers: {
               'Authorization': `Bearer ${token}`
@@ -123,7 +123,7 @@ export const Notifications = () => {
               toast.dismiss(t.id);
               try {
                 const token = localStorage.getItem('token');
-                await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/notifications/${id}`, {
+                await fetch(`${(import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/+$/, '')}/api/notifications/${id}`, {
                   method: 'DELETE',
                   headers: {
                     'Authorization': `Bearer ${token}`
@@ -166,7 +166,7 @@ export const Notifications = () => {
               toast.dismiss(t.id);
               try {
                 const token = localStorage.getItem('token');
-                await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/notifications/bulk-delete`, {
+                await fetch(`${(import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/+$/, '')}/api/notifications/bulk-delete`, {
                   method: 'DELETE',
                   headers: {
                     'Authorization': `Bearer ${token}`,

@@ -73,7 +73,7 @@ export const Dashboard = () => {
     else setLoading(true);
     try {
       const queryStr = getDateParams(type, start, end);
-      const res = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/dashboard/aggregates?${queryStr}`, {
+      const res = await fetch(`${(import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/+$/, '')}/api/dashboard/aggregates?${queryStr}`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token') || ''}`
         },

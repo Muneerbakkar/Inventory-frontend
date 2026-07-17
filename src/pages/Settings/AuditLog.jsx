@@ -40,7 +40,7 @@ export const AuditLog = () => {
         startDate,
         endDate
       });
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/audit-logs?${queryParams}`, {
+      const response = await fetch(`${(import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/+$/, '')}/api/audit-logs?${queryParams}`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
