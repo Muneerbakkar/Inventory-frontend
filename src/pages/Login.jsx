@@ -30,7 +30,7 @@ export const Login = () => {
   return (
     <div className="flex min-h-screen bg-background">
       {/* Left Panel: Login Form */}
-      <div className="flex w-full flex-col justify-center px-4 py-12 sm:px-12 md:px-24 lg:w-1/2 xl:px-32">
+      <div className="flex w-full flex-col justify-center px-4 py-12 sm:px-12 md:px-24 lg:w-3/5 xl:px-32">
         <div className="mx-auto w-full max-w-md">
           {/* Logo Section */}
           <div className="mb-10 flex items-center gap-2">
@@ -142,7 +142,7 @@ export const Login = () => {
       </div>
 
       {/* Right Panel: Feature Graphic */}
-      <div className="hidden lg:flex lg:w-1/2 p-4">
+      <div className="hidden lg:flex lg:w-2/5 p-4">
         <div className="relative flex w-full h-full flex-col justify-end overflow-hidden rounded-3xl bg-muted/50 border border-border shadow-2xl">
           
           {/* Background Decorative Circles */}
