@@ -22,6 +22,7 @@ export const PurchaseForm = () => {
   const isSubmitting = isCreating || isUpdating;
 
   const [supplierId, setSupplierId] = useState("");
+  const [supplierName, setSupplierName] = useState("");
   const [supplierRefNumber, setSupplierRefNumber] = useState("");
   const [paymentMode, setPaymentMode] = useState("Cash");
   const [amountPaid, setAmountPaid] = useState("");
@@ -34,12 +35,14 @@ export const PurchaseForm = () => {
     if (isEditMode && billData?.data?.purchaseBill) {
       const bill = billData.data.purchaseBill;
       setSupplierId(bill.supplierId?._id || bill.supplierId || "");
+      setSupplierName(bill.supplierId?.name || "");
       setSupplierRefNumber(bill.supplierRefNumber || "");
       setPaymentMode(bill.paymentMode || "Cash");
       setAmountPaid(bill.amountPaid || "");
       if (bill.items && bill.items.length > 0) {
         setItems(bill.items.map(item => ({
           productId: item.productId?._id || item.productId,
+          productName: item.productId?.name || "",
           quantity: item.quantity,
           purchasePrice: item.purchasePrice,
           gstPercent: item.gstPercent
@@ -54,11 +57,12 @@ export const PurchaseForm = () => {
       newItems[index] = {
         ...newItems[index],
         productId,
+        productName: product.name || "",
         purchasePrice: product.purchasePrice || 0,
         gstPercent: product.gstSlabId?.totalPercent || 18
       };
     } else {
-      newItems[index] = { productId: "", quantity: 1, purchasePrice: 0, gstPercent: 0 };
+      newItems[index] = { productId: "", productName: "", quantity: 1, purchasePrice: 0, gstPercent: 0 };
     }
     setItems(newItems);
   };
@@ -69,11 +73,11 @@ export const PurchaseForm = () => {
     setItems(newItems);
   };
 
-  const addItem = () => setItems([...items, { productId: "", quantity: 1, purchasePrice: 0, gstPercent: 0 }]);
+  const addItem = () => setItems([...items, { productId: "", productName: "", quantity: 1, purchasePrice: 0, gstPercent: 0 }]);
   
   const removeItem = (index) => {
     if (items.length === 1) {
-      setItems([{ productId: "", quantity: 1, purchasePrice: 0, gstPercent: 0 }]);
+      setItems([{ productId: "", productName: "", quantity: 1, purchasePrice: 0, gstPercent: 0 }]);
     } else {
       setItems(items.filter((_, i) => i !== index));
     }
@@ -156,6 +160,7 @@ export const PurchaseForm = () => {
                       onChange={(val, raw) => handleProductSelect(index, val, raw)}
                       placeholder="Search Product..."
                       emptyText="No products found."
+                      defaultDisplay={item.productName}
                       formatOption={(p) => ({
                         value: p._id,
                         label: `${p.name} (Stock: ${p.quantity})`,
@@ -203,12 +208,16 @@ export const PurchaseForm = () => {
             <div className="space-y-3">
               <div>
                 <label className="text-xs font-medium mb-1 block">Supplier</label>
-                <AsyncSearchDropdown 
+                <AsyncSearchDropdown
                   fetchHook={useGetSuppliersQuery}
                   value={supplierId}
-                  onChange={setSupplierId}
+                  onChange={(val, raw) => {
+                    setSupplierId(val);
+                    setSupplierName(raw?.name || "");
+                  }}
                   placeholder="Search Supplier..."
                   emptyText="No suppliers found."
+                  defaultDisplay={supplierName}
                   formatOption={(s) => ({
                     value: s._id,
                     label: `${s.name} ${s.phone ? `- ${s.phone}` : ''}`,

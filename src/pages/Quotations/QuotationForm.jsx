@@ -20,11 +20,12 @@ export const QuotationForm = () => {
   const isSubmitting = isCreating || isUpdating;
 
   const [customerId, setCustomerId] = useState("");
+  const [customerName, setCustomerName] = useState("");
   const [validTillDate, setValidTillDate] = useState("");
   const dateRef = useRef(null);
 
   const [items, setItems] = useState([
-    { productId: "", quantity: 1, sellingPrice: 0, gstPercent: 0 }
+    { productId: "", productName: "", quantity: 1, sellingPrice: 0, gstPercent: 0 }
   ]);
 
 
@@ -32,10 +33,12 @@ export const QuotationForm = () => {
     if (isEdit && quotationData?.data?.quotation) {
       const q = quotationData.data.quotation;
       setCustomerId(q.customerId?._id || q.customerId || "");
+      setCustomerName(q.customerId?.name || "");
       setValidTillDate(q.validTillDate ? new Date(q.validTillDate).toISOString().split('T')[0] : "");
       if (q.items && q.items.length > 0) {
         setItems(q.items.map(item => ({
           productId: item.productId?._id || item.productId || "",
+          productName: item.productId?.name || "",
           quantity: item.quantity,
           sellingPrice: item.sellingPrice,
           gstPercent: item.gstPercent,
@@ -51,11 +54,12 @@ export const QuotationForm = () => {
       newItems[index] = {
         ...newItems[index],
         productId,
+        productName: product.name || "",
         sellingPrice: product.sellingPrice,
         gstPercent,
       };
     } else {
-      newItems[index] = { productId: "", quantity: 1, sellingPrice: 0, gstPercent: 0 };
+      newItems[index] = { productId: "", productName: "", quantity: 1, sellingPrice: 0, gstPercent: 0 };
     }
     setItems(newItems);
   };
@@ -66,11 +70,11 @@ export const QuotationForm = () => {
     setItems(newItems);
   };
 
-  const addItem = () => setItems([...items, { productId: "", quantity: 1, sellingPrice: 0, gstPercent: 0 }]);
+  const addItem = () => setItems([...items, { productId: "", productName: "", quantity: 1, sellingPrice: 0, gstPercent: 0 }]);
   
   const removeItem = (index) => {
     if (items.length === 1) {
-      setItems([{ productId: "", quantity: 1, sellingPrice: 0, gstPercent: 0 }]);
+      setItems([{ productId: "", productName: "", quantity: 1, sellingPrice: 0, gstPercent: 0 }]);
     } else {
       setItems(items.filter((_, i) => i !== index));
     }
@@ -152,6 +156,7 @@ export const QuotationForm = () => {
                       onChange={(val, raw) => handleProductSelect(index, val, raw)}
                       placeholder="Search Product..."
                       emptyText="No products found."
+                      defaultDisplay={item.productName}
                       formatOption={(p) => ({
                         value: p._id,
                         label: `${p.name} (Stock: ${p.quantity}) - ₹${p.sellingPrice}`,
@@ -203,9 +208,15 @@ export const QuotationForm = () => {
                 <AsyncSearchDropdown 
                   fetchHook={useGetCustomersQuery}
                   value={customerId}
-                  onChange={setCustomerId}
-                  placeholder="Search Customer..."
+                  onChange={(val, raw) => {
+                    setCustomerId(val);
+                    setCustomerName(raw?.name || "");
+                  }}
+                  placeholder="Walk-in Customer (Select...)"
                   emptyText="No customers found."
+                  allowAdd={true}
+                  onAdd={handleAddCustomer}
+                  defaultDisplay={customerName}
                   formatOption={(c) => ({
                     value: c._id,
                     label: `${c.name} ${c.phone ? `- ${c.phone}` : ''}`,

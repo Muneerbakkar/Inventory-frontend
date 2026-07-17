@@ -22,19 +22,23 @@ export const NewSale = () => {
   const isSubmitting = isCreating || isUpdating;
 
   const [customerId, setCustomerId] = useState("");
+  const [customerName, setCustomerName] = useState("");
   const [referralId, setReferralId] = useState("");
+  const [referralName, setReferralName] = useState("");
   const [paymentMode, setPaymentMode] = useState("Cash");
   const [amountPaid, setAmountPaid] = useState("");
 
   const [items, setItems] = useState([
-    { productId: "", quantity: 1, maxQty: 0, sellingPrice: 0, gstPercent: 0, originalQty: 0 }
+    { productId: "", productName: "", quantity: 1, maxQty: 0, sellingPrice: 0, gstPercent: 0, originalQty: 0 }
   ]);
 
   useEffect(() => {
     if (isEditing && invoiceData?.data?.invoice) {
       const inv = invoiceData.data.invoice;
       setCustomerId(inv.customerId?._id || inv.customerId || "");
+      setCustomerName(inv.customerId?.name || "");
       setReferralId(inv.referralId?._id || inv.referralId || "");
+      setReferralName(inv.referralId?.name || "");
       setPaymentMode(inv.paymentMode || "Cash");
       setAmountPaid(inv.amountPaid || "");
       
@@ -43,6 +47,7 @@ export const NewSale = () => {
         const pId = p._id || item.productId;
         return {
           productId: pId,
+          productName: p.name || "",
           quantity: item.quantity,
           maxQty: p ? (p.quantity || 0) + item.quantity : item.quantity,
           sellingPrice: item.sellingPrice,
@@ -50,7 +55,7 @@ export const NewSale = () => {
           originalQty: item.quantity
         };
       });
-      setItems(loadedItems.length > 0 ? loadedItems : [{ productId: "", quantity: 1, maxQty: 0, sellingPrice: 0, gstPercent: 0, originalQty: 0 }]);
+      setItems(loadedItems.length > 0 ? loadedItems : [{ productId: "", productName: "", quantity: 1, maxQty: 0, sellingPrice: 0, gstPercent: 0, originalQty: 0 }]);
     }
   }, [isEditing, invoiceData]);
 
@@ -78,13 +83,14 @@ export const NewSale = () => {
       newItems[index] = {
         ...newItems[index],
         productId,
-        maxQty: product.quantity,
-        sellingPrice: product.sellingPrice,
+        productName: product.name || "",
+        maxQty: product.quantity + newItems[index].originalQty,
+        sellingPrice: product.sellingPrice || 0,
         gstPercent,
         originalQty: 0
       };
     } else {
-      newItems[index] = { productId: "", quantity: 1, maxQty: 0, sellingPrice: 0, gstPercent: 0, originalQty: 0 };
+      newItems[index] = { productId: "", productName: "", quantity: 1, maxQty: 0, sellingPrice: 0, gstPercent: 0, originalQty: 0 };
     }
     setItems(newItems);
   };
@@ -95,11 +101,11 @@ export const NewSale = () => {
     setItems(newItems);
   };
 
-  const addItem = () => setItems([...items, { productId: "", quantity: 1, maxQty: 0, sellingPrice: 0, gstPercent: 0, originalQty: 0 }]);
+  const addItem = () => setItems([...items, { productId: "", productName: "", quantity: 1, maxQty: 0, sellingPrice: 0, gstPercent: 0, originalQty: 0 }]);
   
   const removeItem = (index) => {
     if (items.length === 1) {
-      setItems([{ productId: "", quantity: 1, maxQty: 0, sellingPrice: 0, gstPercent: 0, originalQty: 0 }]);
+      setItems([{ productId: "", productName: "", quantity: 1, maxQty: 0, sellingPrice: 0, gstPercent: 0, originalQty: 0 }]);
     } else {
       setItems(items.filter((_, i) => i !== index));
     }
@@ -109,7 +115,7 @@ export const NewSale = () => {
   const calculatedItems = useMemo(() => {
     return items.map(item => {
       const lineTotal = item.sellingPrice * item.quantity;
-      const gstAmount = (lineTotal * item.gstPercent) / (100 + item.gstPercent); // Reverse calc if sellingPrice includes GST
+      const gstAmount = (lineTotal * item.gstPercent) / (100 + item.gstPercent);
       return {
         ...item,
         lineTotal,
@@ -127,17 +133,14 @@ export const NewSale = () => {
       }
     });
     const grand = sub + gst;
-    const roundOff = Math.round(grand) - grand;
     return {
       subTotal: sub,
       totalGst: gst,
-      grandTotal: Math.round(grand),
-      roundOff
+      grandTotal: Math.round(grand)
     };
   }, [calculatedItems]);
 
   const onSubmit = async () => {
-    // Validations
     if (!items[0].productId) return toast.error("Please add at least one product");
     
     for (let i = 0; i < items.length; i++) {
@@ -206,11 +209,15 @@ export const NewSale = () => {
                 <AsyncSearchDropdown 
                   fetchHook={useGetCustomersQuery}
                   value={customerId}
-                  onChange={setCustomerId}
-                  placeholder="Walk-in Customer (Select...)"
+                  onChange={(val, raw) => {
+                    setCustomerId(val);
+                    setCustomerName(raw?.name || "");
+                  }}
+                  placeholder="Search Customer..."
                   emptyText="No customers found."
                   allowAdd={true}
                   onAdd={handleAddCustomer}
+                  defaultDisplay={customerName}
                   formatOption={(c) => ({
                     value: c._id,
                     label: `${c.name} ${c.phone ? `- ${c.phone}` : ''}`,
@@ -223,11 +230,15 @@ export const NewSale = () => {
                 <AsyncSearchDropdown 
                   fetchHook={useGetReferralsQuery}
                   value={referralId}
-                  onChange={setReferralId}
-                  placeholder="None"
+                  onChange={(val, raw) => {
+                    setReferralId(val);
+                    setReferralName(raw?.name || "");
+                  }}
+                  placeholder="Search Referral..."
                   emptyText="No referrals found."
                   allowAdd={true}
                   onAdd={handleAddReferral}
+                  defaultDisplay={referralName}
                   formatOption={(r) => ({
                     value: r._id,
                     label: r.name,
@@ -251,6 +262,7 @@ export const NewSale = () => {
                       onChange={(val, raw) => handleProductSelect(index, val, raw)}
                       placeholder="Search Product..."
                       emptyText="No products found."
+                      defaultDisplay={item.productName}
                       formatOption={(p) => ({
                         value: p._id,
                         label: `${p.name} (Stock: ${p._id === item.productId && isEditing ? item.maxQty : p.quantity}) - ₹${p.sellingPrice}`,

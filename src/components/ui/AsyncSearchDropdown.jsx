@@ -11,7 +11,8 @@ export const AsyncSearchDropdown = ({
   allowClear = true,
   disabled = false,
   allowAdd = false,
-  onAdd
+  onAdd,
+  defaultDisplay
 }) => {
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
@@ -30,7 +31,7 @@ export const AsyncSearchDropdown = ({
   const optionsData = data?.data?.products || data?.data?.customers || data?.data?.suppliers || data?.data?.referrals || data?.data || [];
   
   const options = Array.isArray(optionsData) ? optionsData.map(formatOption) : [];
-  const selected = options.find(o => o.value === value) || (value ? { label: "Selected...", value } : null);
+  const selected = options.find(o => o.value === value) || (value ? { label: defaultDisplay || "Selected...", value } : null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
