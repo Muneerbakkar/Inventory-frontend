@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useGetPurchaseBillsQuery, useCreatePurchaseReturnMutation, useUpdatePurchaseReturnMutation, useGetPurchaseReturnByIdQuery } from "../../features/purchases/purchasesApi";
 import { Button } from "../../components/ui/Button";
 import { Input } from "../../components/ui/Input";
-import { Save } from "lucide-react";
+import { Save, Trash2 } from "lucide-react";
 import { BackButton } from "../../components/ui/BackButton";
 import toast from "react-hot-toast";
 
@@ -72,6 +72,10 @@ export const PurchaseReturnForm = () => {
       newItems[index][field] = value;
     }
     setReturnItems(newItems);
+  };
+
+  const removeReturnItem = (index) => {
+    setReturnItems(returnItems.filter((_, i) => i !== index));
   };
 
   const { subTotal, totalGst, grandTotal } = useMemo(() => {
@@ -166,9 +170,10 @@ export const PurchaseReturnForm = () => {
               <div className="space-y-3 mt-4 border-t pt-4">
                 <div className="grid grid-cols-12 gap-2 text-xs font-semibold text-muted-foreground mb-2 px-2">
                   <div className="col-span-4">Product</div>
-                  <div className="col-span-2">Purchased</div>
+                  <div className="col-span-2 text-center">Purchased</div>
                   <div className="col-span-2">Return Qty</div>
-                  <div className="col-span-4">Reason</div>
+                  <div className="col-span-3">Reason</div>
+                  <div className="col-span-1"></div>
                 </div>
                 {returnItems.map((item, index) => (
                   <div key={index} className="grid grid-cols-12 gap-2 items-center bg-muted/30 p-2 rounded-lg border">
@@ -195,7 +200,7 @@ export const PurchaseReturnForm = () => {
                         className="h-8"
                       />
                     </div>
-                    <div className="col-span-4">
+                    <div className="col-span-3">
                       <Input
                         type="text"
                         value={item.reason}
@@ -203,6 +208,11 @@ export const PurchaseReturnForm = () => {
                         placeholder="Reason for return"
                         className="h-8"
                       />
+                    </div>
+                    <div className="col-span-1 flex justify-end">
+                      <Button variant="ghost" size="sm" className="text-destructive h-8 w-8 p-0" onClick={() => removeReturnItem(index)}>
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
                     </div>
                   </div>
                 ))}

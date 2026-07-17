@@ -313,11 +313,7 @@ export const Notifications = () => {
                   checked={selectedIds.includes(notif._id)}
                   onChange={() => handleSelectToggle(notif._id)}
                 />
-                <div className={`mt-0.5 rounded-full p-2 ${
-                  notif.type === 'LowStock' ? 'bg-amber-100 text-amber-800' :
-                  notif.type === 'OverduePayment' ? 'bg-rose-100 text-rose-800' :
-                  'bg-blue-100 text-blue-800'
-                }`}>
+                <div className="mt-0.5 rounded-full p-2 bg-gray-800 text-red-500">
                   {notif.type === 'LowStock' ? <AlertTriangle className="h-4 w-4" /> :
                    notif.type === 'OverduePayment' ? <CreditCard className="h-4 w-4" /> :
                    <Bell className="h-4 w-4" />}

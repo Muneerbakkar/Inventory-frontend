@@ -98,7 +98,9 @@ export const NewSale = () => {
   const addItem = () => setItems([...items, { productId: "", quantity: 1, maxQty: 0, sellingPrice: 0, gstPercent: 0, originalQty: 0 }]);
   
   const removeItem = (index) => {
-    if (items.length > 1) {
+    if (items.length === 1) {
+      setItems([{ productId: "", quantity: 1, maxQty: 0, sellingPrice: 0, gstPercent: 0, originalQty: 0 }]);
+    } else {
       setItems(items.filter((_, i) => i !== index));
     }
   };
@@ -275,7 +277,7 @@ export const NewSale = () => {
                         {(item.sellingPrice * item.quantity).toFixed(2)}
                       </div>
                     </div>
-                    <Button variant="outline" size="icon" onClick={() => removeItem(index)} disabled={items.length === 1} className="h-10 w-10 shrink-0 p-0 text-red-600 hover:text-red-700 hover:bg-red-50">
+                    <Button variant="outline" size="icon" onClick={() => removeItem(index)} className="h-10 w-10 shrink-0 p-0 text-red-600 hover:text-red-700 hover:bg-red-50">
                       <Trash2 className="h-4 w-4 text-red-500" />
                     </Button>
                   </div>
@@ -336,7 +338,10 @@ export const NewSale = () => {
               </div>
             </div>
 
-            <div className="flex justify-end mt-6">
+            <div className="flex justify-end mt-6 gap-3">
+              <Button type="button" variant="outline" onClick={() => navigate("/sales")} disabled={isSubmitting}>
+                Cancel
+              </Button>
               <Button onClick={onSubmit} disabled={isSubmitting}>
                 <Save className="mr-2 h-4 w-4" />
                 {isEditing ? "Update Sale" : "Complete Sale"}

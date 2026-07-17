@@ -72,7 +72,9 @@ export const PurchaseForm = () => {
   const addItem = () => setItems([...items, { productId: "", quantity: 1, purchasePrice: 0, gstPercent: 0 }]);
   
   const removeItem = (index) => {
-    if (items.length > 1) {
+    if (items.length === 1) {
+      setItems([{ productId: "", quantity: 1, purchasePrice: 0, gstPercent: 0 }]);
+    } else {
       setItems(items.filter((_, i) => i !== index));
     }
   };
@@ -146,7 +148,8 @@ export const PurchaseForm = () => {
             <div className="space-y-3">
               {items.map((item, index) => (
                 <div key={index} className="flex flex-col lg:flex-row items-start lg:items-center gap-3 bg-muted/30 p-3 lg:p-2 rounded-lg border">
-                  <div className="w-full lg:w-auto flex-1 min-w-[200px]">
+                  <div className="w-full lg:w-auto flex-1 min-w-[200px] space-y-2">
+                    <label className="text-sm font-medium block">Product</label>
                     <AsyncSearchDropdown
                       fetchHook={useGetProductsQuery}
                       value={item.productId}
@@ -160,26 +163,28 @@ export const PurchaseForm = () => {
                       })}
                     />
                   </div>
-                  <div className="flex items-center gap-2 w-full sm:w-auto mt-2 sm:mt-0 shrink-0">
-                    <div className="flex-1 sm:w-24">
-                    <Input
-                      type="number"
-                      min="1"
-                      value={item.quantity}
-                      onChange={(e) => updateItem(index, 'quantity', Number(e.target.value))}
-                      placeholder="Qty"
-                    />
+                  <div className="flex items-end gap-2 w-full sm:w-auto mt-2 sm:mt-0 shrink-0">
+                    <div className="flex-1 sm:w-24 space-y-2">
+                      <label className="text-sm font-medium block">Qty</label>
+                      <Input
+                        type="number"
+                        min="1"
+                        value={item.quantity || ''}
+                        onChange={(e) => updateItem(index, 'quantity', e.target.value === '' ? '' : Number(e.target.value))}
+                        placeholder="1"
+                      />
+                    </div>
+                    <div className="flex-1 sm:w-28 space-y-2">
+                      <label className="text-sm font-medium block">Price (₹)</label>
+                      <Input
+                        type="number"
+                        min="0"
+                        value={item.purchasePrice || ''}
+                        onChange={(e) => updateItem(index, 'purchasePrice', e.target.value === '' ? '' : Number(e.target.value))}
+                        placeholder="0.00"
+                      />
                   </div>
-                  <div className="flex-1 sm:w-28">
-                    <Input
-                      type="number"
-                      min="0"
-                      value={item.purchasePrice}
-                      onChange={(e) => updateItem(index, 'purchasePrice', Number(e.target.value))}
-                      placeholder="Price"
-                    />
-                  </div>
-                  <Button variant="ghost" size="sm" className="text-destructive h-9 w-9 p-0 shrink-0" onClick={() => removeItem(index)}>
+                  <Button variant="ghost" size="sm" className="text-destructive h-9 w-9 p-0 shrink-0 mb-1" onClick={() => removeItem(index)}>
                     <Trash2 className="h-4 w-4" />
                   </Button>
                   </div>

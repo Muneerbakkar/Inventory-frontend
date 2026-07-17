@@ -69,7 +69,9 @@ export const QuotationForm = () => {
   const addItem = () => setItems([...items, { productId: "", quantity: 1, sellingPrice: 0, gstPercent: 0 }]);
   
   const removeItem = (index) => {
-    if (items.length > 1) {
+    if (items.length === 1) {
+      setItems([{ productId: "", quantity: 1, sellingPrice: 0, gstPercent: 0 }]);
+    } else {
       setItems(items.filter((_, i) => i !== index));
     }
   };
@@ -158,28 +160,28 @@ export const QuotationForm = () => {
                       })}
                     />
                   </div>
-                  <div className="flex items-center gap-2 w-full sm:w-auto mt-2 sm:mt-0 shrink-0">
+                  <div className="flex items-end gap-2 w-full sm:w-auto mt-2 sm:mt-0 shrink-0">
                     <div className="flex-1 sm:w-24 space-y-2">
-                      <label className="text-sm font-medium text-center block">Qty</label>
+                      <label className="text-sm font-medium block">Qty</label>
                       <Input
                         type="number"
                         min="1"
                         value={item.quantity || ''}
                         onChange={(e) => updateItem(index, 'quantity', e.target.value === '' ? '' : Number(e.target.value))}
-                        placeholder="Qty"
+                        placeholder="1"
                       />
                     </div>
                     <div className="flex-1 sm:w-28 space-y-2">
-                      <label className="text-sm font-medium text-center block">Price (₹)</label>
+                      <label className="text-sm font-medium block">Price (₹)</label>
                       <Input
                         type="number"
                         min="0"
                         value={item.sellingPrice || ''}
                         onChange={(e) => updateItem(index, 'sellingPrice', e.target.value === '' ? '' : Number(e.target.value))}
-                        placeholder="Price"
+                        placeholder="0.00"
                       />
                     </div>
-                  <Button variant="ghost" size="sm" className="text-destructive h-9 w-9 p-0 shrink-0" onClick={() => removeItem(index)}>
+                  <Button variant="ghost" size="sm" className="text-destructive h-9 w-9 p-0 shrink-0 mb-1" onClick={() => removeItem(index)}>
                     <Trash2 className="h-4 w-4" />
                   </Button>
                   </div>
