@@ -108,11 +108,9 @@ export const Sidebar = ({ isOpen, setIsOpen }) => {
       )}>
         <div className="flex h-16 items-center justify-between border-b px-6">
           <div className="flex items-center gap-2.5">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-              <Package className="h-5 w-5" />
-            </div>
+            <img src="/logo.png" alt="INVENQ logo" className="h-10 w-10 dark:invert" />
             <h1 className="text-xl font-bold text-foreground tracking-tight">
-              Warehouse
+              INVENQ
             </h1>
           </div>
           <button 

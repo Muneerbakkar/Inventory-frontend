@@ -37,7 +37,7 @@ export const PurchaseView = () => {
                 <p className="whitespace-pre-wrap leading-relaxed max-w-sm">{settings.address}</p>
               ) : (
                 <>
-                  <p className="font-bold text-sm mb-1">INVENTORY AND BILLING</p>
+                  <p className="font-bold text-sm mb-1">INVENQ</p>
                   <p>Room No: 122, Building Name, 1st Floor</p>
                   <p>Main Road, City, State - 123456</p>
                   <p>Phone: +91 98765 43210 | Email: info@yourcompany.com</p>

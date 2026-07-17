@@ -34,8 +34,8 @@ export const Login = () => {
         <div className="mx-auto w-full max-w-md">
           {/* Logo Section */}
           <div className="mb-10 flex items-center gap-2">
-            <img src="/logo.png" alt="Invenq logo" className="h-8 w-8 dark:invert" />
-            <span className="text-xl font-bold tracking-tight">Invenq</span>
+            <img src="/logo.png" alt="INVENQ logo" className="h-10 w-10 dark:invert" />
+            <span className="text-2xl font-bold tracking-tight">INVENQ</span>
           </div>
 
           <h2 className="text-3xl font-bold tracking-tight text-foreground">
@@ -205,7 +205,7 @@ export const Login = () => {
               The easiest way to manage<br />your workflow.
             </h3>
             <p className="text-primary-foreground/80 text-lg">
-              Join the Invenq community now!
+              Join the INVENQ community now!
             </p>
           </div>
         </div>
