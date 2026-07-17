@@ -162,8 +162,8 @@ export const QuotationForm = () => {
                     <Input
                       type="number"
                       min="1"
-                      value={item.quantity}
-                      onChange={(e) => updateItem(index, 'quantity', Number(e.target.value))}
+                      value={item.quantity || ''}
+                      onChange={(e) => updateItem(index, 'quantity', e.target.value === '' ? '' : Number(e.target.value))}
                       placeholder="Qty"
                     />
                   </div>
@@ -171,8 +171,8 @@ export const QuotationForm = () => {
                     <Input
                       type="number"
                       min="0"
-                      value={item.sellingPrice}
-                      onChange={(e) => updateItem(index, 'sellingPrice', Number(e.target.value))}
+                      value={item.sellingPrice || ''}
+                      onChange={(e) => updateItem(index, 'sellingPrice', e.target.value === '' ? '' : Number(e.target.value))}
                       placeholder="Price"
                     />
                   </div>
