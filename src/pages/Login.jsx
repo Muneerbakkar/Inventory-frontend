@@ -191,11 +191,11 @@ export const Login = () => {
                   <div className="flex-[2] flex gap-4">
                     <div className="flex-1 rounded-lg border border-primary-foreground/10 bg-primary-foreground/5 p-3 relative overflow-hidden">
                        <div className="h-2.5 w-1/2 rounded-full bg-primary-foreground/40"></div>
-                       <div className="absolute bottom-3 right-3 h-12 w-12 rounded-full bg-primary-foreground/10"></div>
+                       <div className="absolute bottom-3 right-3 h-10 w-10 rounded-full bg-primary-foreground/10"></div>
                     </div>
                     <div className="flex-1 rounded-lg border border-primary-foreground/10 bg-primary-foreground/5 p-3 relative overflow-hidden">
                        <div className="h-2.5 w-1/2 rounded-full bg-primary-foreground/40"></div>
-                       <div className="absolute bottom-3 right-3 h-12 w-12 rounded-full bg-primary-foreground/10"></div>
+                       <div className="absolute bottom-3 right-3 h-10 w-10 rounded-full bg-primary-foreground/10"></div>
                     </div>
                   </div>
                 </div>
