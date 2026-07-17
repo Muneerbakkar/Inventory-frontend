@@ -34,10 +34,8 @@ export const Login = () => {
         <div className="mx-auto w-full max-w-md">
           {/* Logo Section */}
           <div className="mb-10 flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded bg-primary text-primary-foreground">
-              <Zap className="h-5 w-5" />
-            </div>
-            <span className="text-xl font-bold tracking-tight">InventoryApp</span>
+            <img src="/logo.png" alt="invenq logo" className="h-8 w-8 dark:invert" />
+            <span className="text-xl font-bold tracking-tight">invenq</span>
           </div>
 
           <h2 className="text-3xl font-bold tracking-tight text-foreground">
@@ -207,7 +205,7 @@ export const Login = () => {
               The easiest way to manage<br />your workflow.
             </h3>
             <p className="text-primary-foreground/80 text-lg">
-              Join the Inventory community now!
+              Join the invenq community now!
             </p>
           </div>
         </div>
