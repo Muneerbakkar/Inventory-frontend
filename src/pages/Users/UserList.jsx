@@ -103,15 +103,15 @@ export const UserList = () => {
             <input 
               type="date" 
               ref={startDateRef}
-              className="rounded-md border border-input bg-background pl-3 pr-9 py-1.5 text-sm w-full sm:w-auto [&::-webkit-calendar-picker-indicator]:hidden"
+              className="rounded-md border border-input bg-background pl-9 pr-3 py-1.5 text-sm w-full sm:w-auto [&::-webkit-calendar-picker-indicator]:hidden"
               value={startDate}
               onChange={(e) => {
                 setStartDate(e.target.value);
                 setPage(1);
               }}
             />
-            <Calendar 
-              className="absolute right-2.5 h-4 w-4 text-muted-foreground cursor-pointer" 
+            <Calendar
+              className="absolute left-3 h-4 w-4 text-muted-foreground cursor-pointer" 
               onClick={() => startDateRef.current?.showPicker()}
             />
           </div>
@@ -120,15 +120,15 @@ export const UserList = () => {
             <input 
               type="date" 
               ref={endDateRef}
-              className="rounded-md border border-input bg-background pl-3 pr-9 py-1.5 text-sm w-full sm:w-auto [&::-webkit-calendar-picker-indicator]:hidden"
+              className="rounded-md border border-input bg-background pl-9 pr-3 py-1.5 text-sm w-full sm:w-auto [&::-webkit-calendar-picker-indicator]:hidden"
               value={endDate}
               onChange={(e) => {
                 setEndDate(e.target.value);
                 setPage(1);
               }}
             />
-            <Calendar 
-              className="absolute right-2.5 h-4 w-4 text-muted-foreground cursor-pointer" 
+            <Calendar
+              className="absolute left-3 h-4 w-4 text-muted-foreground cursor-pointer" 
               onClick={() => endDateRef.current?.showPicker()}
             />
           </div>
