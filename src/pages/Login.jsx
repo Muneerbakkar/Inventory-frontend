@@ -192,9 +192,9 @@ export const Login = () => {
               </div>
             </div>
 
-            {/* Floating Icon Box */}
-            <div className="absolute right-4 top-1/2 -translate-y-1/2 flex h-14 w-14 items-center justify-center rounded-xl bg-background text-primary shadow-xl rotate-3 transform transition-transform hover:rotate-6">
-              <Zap className="h-7 w-7" />
+            {/* Floating Elements */}
+            <div className="absolute -right-6 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-xl bg-background shadow-xl border border-border">
+              <img src="/logo.png" alt="logo" className="h-6 w-6 dark:invert opacity-60" />
             </div>
 
           </div>
