@@ -93,13 +93,13 @@ export const Login = () => {
               {errors.password && <p className="text-xs text-destructive">{errors.password.message}</p>}
               
               <div className="flex justify-end pt-1">
-                <a href="#" className="text-sm font-semibold text-primary hover:text-primary/80">
+                <a href="#" className="text-sm font-semibold text-blue-600 hover:text-blue-500">
                   Forgot password?
                 </a>
               </div>
             </div>
 
-            <Button type="submit" className="w-full h-11 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold" disabled={isLoading}>
+            <Button type="submit" className="w-full h-11 bg-blue-600 hover:bg-blue-700 text-white font-semibold" disabled={isLoading}>
               {isLoading ? "Signing in..." : "Login"}
             </Button>
           </form>
@@ -134,7 +134,7 @@ export const Login = () => {
 
           <p className="mt-8 text-center text-sm text-muted-foreground">
             Don't you have an account?{" "}
-            <Link to="#" className="font-semibold text-primary hover:text-primary/80">
+            <Link to="#" className="font-semibold text-blue-600 hover:text-blue-500">
               Sign Up
             </Link>
           </p>
@@ -143,18 +143,18 @@ export const Login = () => {
 
       {/* Right Panel: Feature Graphic */}
       <div className="hidden lg:flex lg:w-1/2 p-4">
-        <div className="relative flex w-full h-full flex-col justify-end overflow-hidden rounded-3xl bg-primary shadow-2xl">
+        <div className="relative flex w-full h-full flex-col justify-end overflow-hidden rounded-3xl bg-blue-600 shadow-2xl">
           {/* Abstract Dashboard Illustration */}
           <div className="absolute inset-0 flex items-center justify-center p-12">
-             <img src="/login-illustration.png" alt="Dashboard Abstract UI" className="w-full h-auto max-w-lg object-contain mix-blend-screen opacity-90 drop-shadow-2xl" />
+             <img src="/login-illustration.png" alt="Dashboard Abstract UI" className="w-full h-auto max-w-lg object-contain opacity-90 drop-shadow-2xl" />
           </div>
 
           {/* Graphic Overlay Text */}
-          <div className="relative z-10 px-12 pb-16 text-center text-primary-foreground">
+          <div className="relative z-10 px-12 pb-16 text-center text-white">
             <h3 className="text-4xl font-bold tracking-tight mb-3">
               The easiest way to manage<br />your workflow.
             </h3>
-            <p className="text-primary-foreground/80 text-lg">
+            <p className="text-blue-100 text-lg">
               Join the Inventory community now!
             </p>
           </div>
