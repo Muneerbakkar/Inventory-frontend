@@ -147,55 +147,55 @@ export const Login = () => {
         <div className="relative flex w-full h-full flex-col justify-end overflow-hidden rounded-[2rem] bg-primary shadow-2xl">
           
           {/* Background Decorative Circles */}
-          <div className="absolute -top-24 -right-24 h-96 w-96 rounded-full bg-white/5 blur-3xl"></div>
-          <div className="absolute bottom-12 -left-24 h-80 w-80 rounded-full bg-white/5 blur-3xl"></div>
+          <div className="absolute -top-24 -right-24 h-96 w-96 rounded-full bg-primary-foreground/5 blur-3xl"></div>
+          <div className="absolute bottom-12 -left-24 h-80 w-80 rounded-full bg-primary-foreground/5 blur-3xl"></div>
           
           {/* Floating Tilted Square */}
-          <div className="absolute top-12 left-16 h-40 w-40 rounded-3xl border border-white/10 bg-white/5 rotate-12 backdrop-blur-sm"></div>
+          <div className="absolute top-12 left-16 h-40 w-40 rounded-3xl border border-primary-foreground/10 bg-primary-foreground/5 rotate-12 backdrop-blur-sm"></div>
 
           {/* Pure CSS Abstract Dashboard Illustration */}
           <div className="absolute inset-0 flex items-center justify-center p-8 mb-24">
             
-            <div className="relative w-full max-w-[420px] aspect-[4/3] rounded-xl border border-white/20 bg-white/10 backdrop-blur-md shadow-2xl overflow-hidden flex flex-col">
+            <div className="relative w-full max-w-[420px] aspect-[4/3] rounded-xl border border-primary-foreground/20 bg-primary-foreground/10 backdrop-blur-md shadow-2xl overflow-hidden flex flex-col">
               {/* Window Header */}
-              <div className="flex items-center gap-1.5 border-b border-white/10 bg-white/5 px-4 py-2.5">
-                <div className="h-2.5 w-2.5 rounded-full bg-white/40"></div>
-                <div className="h-2.5 w-2.5 rounded-full bg-white/40"></div>
-                <div className="h-2.5 w-2.5 rounded-full bg-white/40"></div>
+              <div className="flex items-center gap-1.5 border-b border-primary-foreground/10 bg-primary-foreground/5 px-4 py-2.5">
+                <div className="h-2.5 w-2.5 rounded-full bg-primary-foreground/40"></div>
+                <div className="h-2.5 w-2.5 rounded-full bg-primary-foreground/40"></div>
+                <div className="h-2.5 w-2.5 rounded-full bg-primary-foreground/40"></div>
               </div>
               
               {/* Window Body */}
               <div className="flex flex-1 p-4 gap-4">
                 {/* Sidebar */}
-                <div className="w-[28%] rounded-lg border border-white/10 bg-white/5 p-3 flex flex-col gap-3">
-                  <div className="h-2 w-3/4 rounded-full bg-white/40"></div>
-                  <div className="h-2 w-full rounded-full bg-white/20"></div>
-                  <div className="h-2 w-5/6 rounded-full bg-white/20"></div>
-                  <div className="h-2 w-full rounded-full bg-white/20"></div>
-                  <div className="mt-auto h-8 w-full rounded-md bg-white/20"></div>
+                <div className="w-[28%] rounded-lg border border-primary-foreground/10 bg-primary-foreground/5 p-3 flex flex-col gap-3">
+                  <div className="h-2 w-3/4 rounded-full bg-primary-foreground/40"></div>
+                  <div className="h-2 w-full rounded-full bg-primary-foreground/20"></div>
+                  <div className="h-2 w-5/6 rounded-full bg-primary-foreground/20"></div>
+                  <div className="h-2 w-full rounded-full bg-primary-foreground/20"></div>
+                  <div className="mt-auto h-8 w-full rounded-md bg-primary-foreground/20"></div>
                 </div>
                 
                 {/* Main Content */}
                 <div className="flex-1 flex flex-col gap-4">
                   {/* Chart Area */}
-                  <div className="flex-[3] rounded-lg border border-white/10 bg-white/5 p-4 flex items-end justify-between gap-2.5">
-                    <div className="w-full bg-white/30 rounded-t-sm h-[20%]"></div>
-                    <div className="w-full bg-white/50 rounded-t-sm h-[40%]"></div>
-                    <div className="w-full bg-white/40 rounded-t-sm h-[30%]"></div>
-                    <div className="w-full bg-white/60 rounded-t-sm h-[65%]"></div>
-                    <div className="w-full bg-white/80 rounded-t-sm h-[85%]"></div>
-                    <div className="w-full bg-white/40 rounded-t-sm h-[50%]"></div>
+                  <div className="flex-[3] rounded-lg border border-primary-foreground/10 bg-primary-foreground/5 p-4 flex items-end justify-between gap-2.5">
+                    <div className="w-full bg-primary-foreground/30 rounded-t-sm h-[20%]"></div>
+                    <div className="w-full bg-primary-foreground/50 rounded-t-sm h-[40%]"></div>
+                    <div className="w-full bg-primary-foreground/40 rounded-t-sm h-[30%]"></div>
+                    <div className="w-full bg-primary-foreground/60 rounded-t-sm h-[65%]"></div>
+                    <div className="w-full bg-primary-foreground/80 rounded-t-sm h-[85%]"></div>
+                    <div className="w-full bg-primary-foreground/40 rounded-t-sm h-[50%]"></div>
                   </div>
                   
                   {/* Bottom Cards */}
                   <div className="flex-[2] flex gap-4">
-                    <div className="flex-1 rounded-lg border border-white/10 bg-white/5 p-3 relative overflow-hidden">
-                       <div className="h-2.5 w-1/2 rounded-full bg-white/40"></div>
-                       <div className="absolute -bottom-4 -right-4 h-16 w-16 rounded-full bg-white/10"></div>
+                    <div className="flex-1 rounded-lg border border-primary-foreground/10 bg-primary-foreground/5 p-3 relative overflow-hidden">
+                       <div className="h-2.5 w-1/2 rounded-full bg-primary-foreground/40"></div>
+                       <div className="absolute -bottom-4 -right-4 h-16 w-16 rounded-full bg-primary-foreground/10"></div>
                     </div>
-                    <div className="flex-1 rounded-lg border border-white/10 bg-white/5 p-3 relative overflow-hidden">
-                       <div className="h-2.5 w-1/2 rounded-full bg-white/40"></div>
-                       <div className="absolute -bottom-4 -right-4 h-16 w-16 rounded-full bg-white/10"></div>
+                    <div className="flex-1 rounded-lg border border-primary-foreground/10 bg-primary-foreground/5 p-3 relative overflow-hidden">
+                       <div className="h-2.5 w-1/2 rounded-full bg-primary-foreground/40"></div>
+                       <div className="absolute -bottom-4 -right-4 h-16 w-16 rounded-full bg-primary-foreground/10"></div>
                     </div>
                   </div>
                 </div>
