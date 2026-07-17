@@ -32,7 +32,10 @@ export const PurchaseView = () => {
           {/* Header */}
           <div className="flex flex-row justify-between items-start pb-4">
             <div className="space-y-0.5 text-xs text-gray-800">
-              <h1 className="text-xl font-black uppercase tracking-wide text-black mb-1">{settings?.name || "YOUR COMPANY PVT. LTD."}</h1>
+              <div className="flex flex-col items-start gap-2 mb-3">
+                <img src="/logo.png" alt="Logo" className="h-16 w-16 rounded-md" />
+                <h1 className="text-xl font-black uppercase tracking-wide text-black">{settings?.name || "YOUR COMPANY PVT. LTD."}</h1>
+              </div>
               {settings?.address ? (
                 <p className="whitespace-pre-wrap leading-relaxed max-w-sm">{settings.address}</p>
               ) : (
