@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Bell, CheckCheck, Eye, Clock, ShieldAlert, Trash2, Calendar } from 'lucide-react';
+import { Bell, CheckCheck, Eye, Clock, ShieldAlert, Trash2, Calendar, AlertTriangle, CreditCard } from 'lucide-react';
 import { Button } from '../../components/ui/Button';
 import toast from 'react-hot-toast';
 
@@ -318,7 +318,9 @@ export const Notifications = () => {
                   notif.type === 'OverduePayment' ? 'bg-rose-100 text-rose-800' :
                   'bg-blue-100 text-blue-800'
                 }`}>
-                  <ShieldAlert className="h-4 w-4" />
+                  {notif.type === 'LowStock' ? <AlertTriangle className="h-4 w-4" /> :
+                   notif.type === 'OverduePayment' ? <CreditCard className="h-4 w-4" /> :
+                   <Bell className="h-4 w-4" />}
                 </div>
                 <div className="space-y-1">
                   <p className="font-semibold text-foreground">
