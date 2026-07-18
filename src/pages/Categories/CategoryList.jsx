@@ -1,7 +1,8 @@
+import { PageHeader } from '../../components/ui/PageHeader';
 import { PaginationControls } from "../../components/ui/PaginationControls";
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import { Plus, Edit, Trash2, Search, Calendar } from "lucide-react";
+import {  Plus, Edit, Trash2, Search, Calendar , Tags } from 'lucide-react';
 import toast from "react-hot-toast";
 import { useGetCategoriesQuery, useDeleteCategoryMutation, useUpdateCategoryMutation } from "../../features/categories/categoryApi";
 import { Button } from "../../components/ui/Button";
@@ -79,14 +80,13 @@ export const CategoryList = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold tracking-tight">Categories</h1>
+      <PageHeader title="Categories" description="Manage your product categories." icon={Tags}>
         <Link to="/categories/new">
           <Button>
             <Plus className="mr-2 h-4 w-4" /> Add Category
           </Button>
         </Link>
-      </div>
+      </PageHeader>
 
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-md bg-card p-4 shadow-sm border">
         <div className="relative flex-1 w-full sm:max-w-sm">

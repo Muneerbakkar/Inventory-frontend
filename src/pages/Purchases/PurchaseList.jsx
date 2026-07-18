@@ -1,10 +1,11 @@
+import { PageHeader } from '../../components/ui/PageHeader';
 import { PaginationControls } from "../../components/ui/PaginationControls";
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGetPurchaseBillsQuery, useUpdatePurchasePaymentStatusMutation, useDeletePurchaseBillMutation } from "../../features/purchases/purchasesApi";
 import { Button } from "../../components/ui/Button";
 import { Input } from "../../components/ui/Input";
-import { Plus, Trash2, Eye, Edit, Search, Calendar } from "lucide-react";
+import {  Plus, Trash2, Eye, Edit, Search, Calendar , ShoppingCart } from 'lucide-react';
 import toast from "react-hot-toast";
 
 const PartialAmountToast = ({ t, bill, updatePayment, revertSelect }) => {
@@ -163,12 +164,11 @@ export const PurchaseList = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold tracking-tight">Purchase Bills</h1>
+      <PageHeader title="Purchase Bills" description="Manage your purchase orders." icon={ShoppingCart}>
         <Button onClick={() => navigate("/purchases/new")}>
           <Plus className="mr-2 h-4 w-4" /> New Bill
         </Button>
-      </div>
+      </PageHeader>
 
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-md bg-card p-4 shadow-sm border">
         <div className="relative flex-1 w-full sm:max-w-sm">

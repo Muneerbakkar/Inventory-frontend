@@ -1,3 +1,4 @@
+import { PageHeader } from '../../components/ui/PageHeader';
 import { useEffect, useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
@@ -5,7 +6,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import toast from "react-hot-toast";
 import { Save, Package, Tag, Hash, Building2, Banknote, Calculator } from "lucide-react";
-import { BackButton } from "../../components/ui/BackButton";
 import { useCreateProductMutation, useUpdateProductMutation, useGetProductByIdQuery, useGetUniqueBrandsQuery } from "../../features/products/productApi";
 import { useGetGstSlabsQuery } from "../../features/gst/gstApi";
 import { useGetSuppliersQuery } from "../../features/suppliers/supplierApi";
@@ -106,11 +106,12 @@ export const ProductForm = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-3">
-        <BackButton />
-        <span className="text-muted-foreground">/</span>
-        <h1 className="text-2xl font-bold tracking-tight">{isEditing ? "Edit Product" : "Add New Product"}</h1>
-      </div>
+      <PageHeader title={isEditing ? "Edit Product" : "Add New Product"} description="Add or edit a product." icon={Package} 
+        >
+        <Button variant="outline" size="sm" onClick={() => navigate(-1)}>
+          Discard
+        </Button>
+      </PageHeader>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         

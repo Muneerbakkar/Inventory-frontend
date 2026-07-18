@@ -1,7 +1,8 @@
+import { PageHeader } from '../../components/ui/PageHeader';
 import { PaginationControls } from "../../components/ui/PaginationControls";
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Save, ArrowDownUp, AlertTriangle } from "lucide-react";
+import {  Save, ArrowDownUp, AlertTriangle , Boxes } from 'lucide-react';
 import { BackButton } from "../../components/ui/BackButton";
 import toast from "react-hot-toast";
 import { useGetProductByIdQuery } from "../../features/products/productApi";
@@ -50,11 +51,12 @@ export const StockAdjustment = () => {
 
   return (
     <div className="space-y-6 max-w-5xl">
-      <div className="flex items-center gap-3">
-        <BackButton />
-        <span className="text-muted-foreground">/</span>
-        <h1 className="text-2xl font-bold tracking-tight">Stock Adjustment: {product.name}</h1>
-      </div>
+      <PageHeader title={`Stock Adjustment: ${product.name}`} description="Adjust inventory levels." icon={Boxes} 
+        >
+        <Button variant="outline" size="sm" onClick={() => navigate(-1)}>
+          Discard
+        </Button>
+      </PageHeader>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         

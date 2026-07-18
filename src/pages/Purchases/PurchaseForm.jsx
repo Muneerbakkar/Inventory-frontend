@@ -1,3 +1,4 @@
+import { PageHeader } from '../../components/ui/PageHeader';
 import { useState, useMemo, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetProductsQuery } from "../../features/products/productApi";
@@ -5,8 +6,7 @@ import { useGetSuppliersQuery } from "../../features/suppliers/supplierApi";
 import { useCreatePurchaseBillMutation, useUpdatePurchaseBillMutation, useGetPurchaseBillByIdQuery } from "../../features/purchases/purchasesApi";
 import { Button } from "../../components/ui/Button";
 import { Input } from "../../components/ui/Input";
-import { Trash2, Save, Plus } from "lucide-react";
-import { BackButton } from "../../components/ui/BackButton";
+import {  Trash2, Save, Plus , ShoppingCart } from 'lucide-react';
 import { AsyncSearchDropdown } from "../../components/ui/AsyncSearchDropdown";
 import toast from "react-hot-toast";
 
@@ -139,11 +139,12 @@ export const PurchaseForm = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-3">
-        <BackButton to="/purchases" />
-        <span className="text-muted-foreground">/</span>
-        <h1 className="text-2xl font-bold tracking-tight">{isEditMode ? 'Edit Purchase Bill' : 'New Purchase Bill'}</h1>
-      </div>
+      <PageHeader title={isEditMode ? 'Edit Purchase Bill' : 'New Purchase Bill'} description="Create or edit a purchase." icon={ShoppingCart} 
+        >
+        <Button variant="outline" size="sm" onClick={() => navigate(-1)}>
+          Discard
+        </Button>
+      </PageHeader>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="md:col-span-2 space-y-6">

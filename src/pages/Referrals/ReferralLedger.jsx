@@ -1,10 +1,11 @@
+import { PageHeader } from '../../components/ui/PageHeader';
 import { PaginationControls } from "../../components/ui/PaginationControls";
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useGetReferralsQuery, useUpdateReferralMutation, useDeleteReferralMutation } from "../../features/referrals/referralsApi";
 import { Button } from "../../components/ui/Button";
 import { Input } from "../../components/ui/Input";
-import { Edit, Trash2, Search, Calendar } from "lucide-react";
+import {  Edit, Trash2, Search, Calendar , UsersRound } from 'lucide-react';
 import toast from "react-hot-toast";
 
 const PartialAmountToast = ({ t, refPerson, updateReferral, revertSelect }) => {
@@ -165,9 +166,7 @@ export const ReferralLedger = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold tracking-tight">Referral Commission Ledger</h1>
-      </div>
+      <PageHeader title="Referral Commission Ledger" description="View referral transactions." icon={UsersRound} />
 
 
 

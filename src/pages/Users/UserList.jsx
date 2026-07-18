@@ -1,8 +1,9 @@
+import { PageHeader } from '../../components/ui/PageHeader';
 import { PaginationControls } from "../../components/ui/PaginationControls";
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Plus, Edit, Trash2, Search, Eye, ToggleLeft, ToggleRight, Calendar } from "lucide-react";
+import {  Plus, Edit, Trash2, Search, Eye, ToggleLeft, ToggleRight, Calendar , Users } from 'lucide-react';
 import toast from "react-hot-toast";
 import { useGetUsersQuery, useDeleteUserMutation, useToggleUserStatusMutation } from "../../features/users/userApi";
 import { Button } from "../../components/ui/Button";
@@ -77,12 +78,11 @@ export const UserList = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold tracking-tight">Users</h1>
+      <PageHeader title="Users" description="Manage system users." icon={Users}>
         <Link to="/users/new">
           <Button><Plus className="mr-2 h-4 w-4" /> Add User</Button>
         </Link>
-      </div>
+      </PageHeader>
 
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-md bg-card p-4 shadow-sm border">
         <div className="relative flex-1 w-full sm:max-w-sm">

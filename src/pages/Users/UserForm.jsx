@@ -1,16 +1,15 @@
-import { useEffect } from "react";
+import { PageHeader } from '../../components/ui/PageHeader';
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import toast from "react-hot-toast";
 import { Save, User, Mail, Phone, Shield, Lock } from "lucide-react";
-import { BackButton } from "../../components/ui/BackButton";
 import { useCreateUserMutation, useUpdateUserMutation, useGetUserByIdQuery } from "../../features/users/userApi";
 import { Input } from "../../components/ui/Input";
 import { Button } from "../../components/ui/Button";
-
-const ROLES = ["SuperAdmin", "Admin", "SalesStaff", "WarehouseStaff", "Accountant"];
+import api from "../../lib/api";
 
 const createSchema = yup.object({
   name: yup.string().required("Name is required"),
@@ -40,6 +39,21 @@ export const UserForm = () => {
     resolver: yupResolver(isEditing ? editSchema : createSchema),
   });
 
+  const [roles, setRoles] = useState([]);
+  const [loadingRoles, setLoadingRoles] = useState(true);
+
+  useEffect(() => {
+    api.get("/roles")
+      .then(res => {
+        setRoles(res.data.data.roles);
+        setLoadingRoles(false);
+      })
+      .catch(err => {
+        toast.error("Failed to load roles");
+        setLoadingRoles(false);
+      });
+  }, []);
+
   useEffect(() => {
     if (isEditing && data?.data?.user) {
       const u = data.data.user;
@@ -66,11 +80,11 @@ export const UserForm = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-3">
-        <BackButton />
-        <span className="text-muted-foreground">/</span>
-        <h1 className="text-2xl font-bold tracking-tight">{isEditing ? "Edit User" : "Add New User"}</h1>
-      </div>
+      <PageHeader title={isEditing ? "Edit User" : "Add New User"} description="Manage user access." icon={User}>
+        <Button variant="outline" size="sm" onClick={() => navigate(-1)}>
+          Discard
+        </Button>
+      </PageHeader>
 
       <form onSubmit={handleSubmit(onSubmit)} className="rounded-xl border bg-card p-6 shadow-sm space-y-6">
         <h2 className="text-base font-semibold border-b pb-3">User Information</h2>
@@ -108,8 +122,8 @@ export const UserForm = () => {
               {...register("role")}
               className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
-              <option value="">Select role...</option>
-              {ROLES.map((r) => <option key={r} value={r}>{r}</option>)}
+              <option value="">{loadingRoles ? "Loading roles..." : "Select role..."}</option>
+              {roles.map((r) => <option key={r._id} value={r.name}>{r.name}</option>)}
             </select>
             {errors.role && <p className="text-xs text-destructive">{errors.role.message}</p>}
           </div>

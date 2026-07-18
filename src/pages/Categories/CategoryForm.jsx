@@ -1,8 +1,8 @@
+import { PageHeader } from '../../components/ui/PageHeader';
 import { useEffect } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { Save } from "lucide-react";
-import { BackButton } from "../../components/ui/BackButton";
+import {  Save , Tags } from 'lucide-react';
 import toast from "react-hot-toast";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -83,12 +83,12 @@ export const CategoryForm = () => {
 
   return (
     <div className="w-full space-y-6">
-      <div className="flex items-center gap-4">
-        <BackButton to="/categories" />
-        <h1 className="text-2xl font-bold tracking-tight">
-          {isEdit ? "Edit Category" : "Add Category"}
-        </h1>
-      </div>
+      <PageHeader title={isEdit ? "Edit Category" : "Add Category"} description="Manage category information." icon={Tags} 
+        >
+        <Button variant="outline" size="sm" onClick={() => navigate(-1)}>
+          Discard
+        </Button>
+      </PageHeader>
 
       <div className="rounded-md border bg-card p-6 shadow-sm">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">

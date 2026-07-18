@@ -1,6 +1,7 @@
+import { PageHeader } from '../components/ui/PageHeader';
 import { PaginationControls } from "../components/ui/PaginationControls";
 import { useState, useEffect, useRef } from 'react';
-import { Calendar } from 'lucide-react';
+import {  Calendar , BarChart3 } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from '../components/ui/Table';
 
@@ -470,8 +471,7 @@ export const Reports = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <h1 className="text-2xl font-bold">Reports</h1>
+      <PageHeader title="Reports" description="Analyze your business data." icon={BarChart3}>
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 print:hidden w-full sm:w-auto bg-card p-4 rounded-md border shadow-sm">
           {activeTab !== 'stock' && (
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
@@ -484,7 +484,7 @@ export const Reports = () => {
                   onChange={(e) => setStartDate(e.target.value)}
                 />
                 <Calendar
-              className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground cursor-pointer" 
+                  className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground cursor-pointer" 
                   onClick={() => startDateRef.current?.showPicker()}
                 />
               </div>
@@ -498,7 +498,7 @@ export const Reports = () => {
                   onChange={(e) => setEndDate(e.target.value)}
                 />
                 <Calendar
-              className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground cursor-pointer" 
+                  className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground cursor-pointer" 
                   onClick={() => endDateRef.current?.showPicker()}
                 />
               </div>
@@ -508,7 +508,7 @@ export const Reports = () => {
             Export to CSV
           </Button>
         </div>
-      </div>
+      </PageHeader>
 
       <div className="flex border-b overflow-x-auto scrollbar-hide print:hidden">
         {tabs.map((tab) => (

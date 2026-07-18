@@ -1,10 +1,11 @@
+import { PageHeader } from '../../components/ui/PageHeader';
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import toast from "react-hot-toast";
-import { User, Mail, Phone, Shield, KeyRound, Save } from "lucide-react";
+import {  User, Mail, Phone, Shield, KeyRound, Save , UserCircle } from 'lucide-react';
 import { useUpdateMeMutation, useUpdatePasswordMutation } from "../../features/auth/authApi";
 import { setCredentials } from "../../features/auth/authSlice";
 import { Input } from "../../components/ui/Input";
@@ -88,7 +89,7 @@ export const ProfilePage = () => {
         <BackButton />
         <span className="text-muted-foreground">/</span>
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">My Profile</h1>
+          <PageHeader title="My Profile" description="Manage your personal account." icon={UserCircle} />
           <p className="text-sm text-muted-foreground mt-1">Manage your account details and security settings.</p>
         </div>
       </div>

@@ -1,7 +1,8 @@
+import { PageHeader } from '../../components/ui/PageHeader';
 import { PaginationControls } from "../../components/ui/PaginationControls";
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import { Plus, Edit, Trash2, Search, AlertTriangle, ArrowDownUp, Eye, Calendar } from "lucide-react";
+import {  Plus, Edit, Trash2, Search, AlertTriangle, ArrowDownUp, Eye, Calendar , Package } from 'lucide-react';
 import toast from "react-hot-toast";
 import { useGetProductsQuery, useDeleteProductMutation } from "../../features/products/productApi";
 import { Button } from "../../components/ui/Button";
@@ -67,12 +68,11 @@ export const ProductList = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold tracking-tight">Products</h1>
+      <PageHeader title="Products" description="Manage your product inventory." icon={Package}>
         <Link to="/products/new">
           <Button><Plus className="mr-2 h-4 w-4" /> Add Product</Button>
         </Link>
-      </div>
+      </PageHeader>
 
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 rounded-md bg-card p-4 shadow-sm border w-full">
         <div className="flex flex-wrap items-center gap-4 flex-1 w-full md:w-auto">

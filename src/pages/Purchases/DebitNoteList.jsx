@@ -1,9 +1,10 @@
+import { PageHeader } from '../../components/ui/PageHeader';
 import { PaginationControls } from "../../components/ui/PaginationControls";
 import { useState, useRef } from "react";
 import { useGetDebitNotesQuery, useUpdateDebitNoteStatusMutation, useDeleteDebitNoteMutation } from "../../features/purchases/purchasesApi";
 import { Button } from "../../components/ui/Button";
 import { Input } from "../../components/ui/Input";
-import { Trash2, Search, Calendar } from "lucide-react";
+import {  Trash2, Search, Calendar , FileMinus } from 'lucide-react';
 import toast from "react-hot-toast";
 
 export const DebitNoteList = () => {
@@ -76,9 +77,7 @@ export const DebitNoteList = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold tracking-tight">Debit Notes</h1>
-      </div>
+      <PageHeader title="Debit Notes" description="Manage purchase debit notes." icon={FileMinus} />
 
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-md bg-card p-4 shadow-sm border">
         <div className="relative flex-1 w-full sm:max-w-sm">

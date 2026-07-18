@@ -1,3 +1,5 @@
+import { PageHeader } from '../../components/ui/PageHeader';
+import { Truck } from 'lucide-react';
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -11,7 +13,6 @@ import {
 } from "../../features/suppliers/supplierApi";
 import { Button } from "../../components/ui/Button";
 import { Input } from "../../components/ui/Input";
-import { BackButton } from "../../components/ui/BackButton";
 
 const schema = yup.object({
   name: yup.string().required("Supplier name is required"),
@@ -78,13 +79,15 @@ export const SupplierForm = () => {
 
   return (
     <div className="w-full space-y-6">
-      <div className="flex items-center gap-3">
-        <BackButton />
-        <span className="text-muted-foreground">/</span>
-        <h1 className="text-2xl font-bold tracking-tight">
-          {isEditing ? "Edit Supplier" : "Add Supplier"}
-        </h1>
-      </div>
+      <PageHeader 
+        title={isEditing ? "Edit Supplier" : "Add Supplier"} 
+        description="Manage supplier information." 
+        icon={Truck}
+        >
+        <Button variant="outline" size="sm" onClick={() => navigate(-1)}>
+          Discard
+        </Button>
+      </PageHeader>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 rounded-md border bg-card p-6 shadow-sm">
         <div className="grid grid-cols-2 gap-4">

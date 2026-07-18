@@ -1,5 +1,6 @@
+import { PageHeader } from '../../components/ui/PageHeader';
 import { useNavigate, useParams, Link } from "react-router-dom";
-import { Edit, Mail, Phone, Shield, Clock, ToggleRight, ToggleLeft } from "lucide-react";
+import {  Edit, Mail, Phone, Shield, Clock, ToggleRight, ToggleLeft , User } from 'lucide-react';
 import { BackButton } from "../../components/ui/BackButton";
 import toast from "react-hot-toast";
 import { useGetUserByIdQuery, useToggleUserStatusMutation } from "../../features/users/userApi";
@@ -43,18 +44,11 @@ export const UserDetail = () => {
   return (
     <div className="space-y-5">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div className="flex items-center gap-3 w-full sm:w-auto">
-          <BackButton />
-          <span className="text-muted-foreground">/</span>
-          <h1 className="text-2xl font-bold tracking-tight">{user.name}</h1>
-        </div>
+      <PageHeader title={user.name} description="View user profile." icon={User}>
         <div className="flex gap-2">
-          <Link to={`/users/${id}/edit`}>
-            <Button size="sm"><Edit className="mr-2 h-4 w-4" /> Edit User</Button>
-          </Link>
+          <Button size="sm" onClick={() => navigate(-1)}>Back</Button>
         </div>
-      </div>
+      </PageHeader>
 
       {/* Info Card */}
       <div className="rounded-xl border bg-card p-6 shadow-sm space-y-6">

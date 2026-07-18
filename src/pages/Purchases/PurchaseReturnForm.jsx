@@ -1,10 +1,10 @@
+import { PageHeader } from '../../components/ui/PageHeader';
 import { useState, useMemo, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetPurchaseBillsQuery, useCreatePurchaseReturnMutation, useUpdatePurchaseReturnMutation, useGetPurchaseReturnByIdQuery } from "../../features/purchases/purchasesApi";
 import { Button } from "../../components/ui/Button";
 import { Input } from "../../components/ui/Input";
-import { Save, Trash2 } from "lucide-react";
-import { BackButton } from "../../components/ui/BackButton";
+import {  Save, Trash2 , Undo2 } from 'lucide-react';
 import toast from "react-hot-toast";
 
 export const PurchaseReturnForm = () => {
@@ -140,11 +140,12 @@ export const PurchaseReturnForm = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-3">
-        <BackButton to="/purchase-returns" />
-        <span className="text-muted-foreground">/</span>
-        <h1 className="text-2xl font-bold tracking-tight">{isEditMode ? 'Edit Purchase Return' : 'New Purchase Return'}</h1>
-      </div>
+      <PageHeader title={isEditMode ? 'Edit Purchase Return' : 'New Purchase Return'} description="Process a purchase return." icon={Undo2} 
+        >
+        <Button variant="outline" size="sm" onClick={() => navigate(-1)}>
+          Discard
+        </Button>
+      </PageHeader>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="md:col-span-2 space-y-6">

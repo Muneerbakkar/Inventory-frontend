@@ -1,6 +1,7 @@
+import { PageHeader } from '../../components/ui/PageHeader';
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { useState, useMemo } from "react";
-import { Edit, Phone, MapPin, Building2, FileText, CreditCard, BadgeCheck } from "lucide-react";
+import {  Edit, Phone, MapPin, Building2, FileText, CreditCard, BadgeCheck , Truck } from 'lucide-react';
 import { BackButton } from "../../components/ui/BackButton";
 import { useGetSupplierByIdQuery } from "../../features/suppliers/supplierApi";
 import { useGetPurchaseBillsQuery, useGetPurchaseReturnsQuery, useGetDebitNotesQuery } from "../../features/purchases/purchasesApi";
@@ -80,25 +81,26 @@ export const SupplierDetail = () => {
   return (
     <div className="space-y-5">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div className="flex items-center gap-3 w-full sm:w-auto flex-wrap">
-          <BackButton />
-          <span className="text-muted-foreground">/</span>
-          <h1 className="text-2xl font-bold tracking-tight">{supplier.name}</h1>
-          <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${
-            supplier.isActive !== false
-              ? "bg-green-500/10 text-green-500"
-              : "bg-red-500/10 text-red-500"
-          }`}>
-            {supplier.isActive !== false ? "Active" : "Inactive"}
-          </span>
-        </div>
-        <Link to={`/suppliers/${id}/edit`}>
-          <Button size="sm">
-            <Edit className="mr-2 h-4 w-4" /> Edit Supplier
-          </Button>
-        </Link>
-      </div>
+      <PageHeader 
+        title={
+          <>
+            {supplier.name}
+            <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${
+                supplier.isActive !== false
+                  ? "bg-green-500/10 text-green-500"
+                  : "bg-red-500/10 text-red-500"
+              }`}>
+              {supplier.isActive !== false ? "Active" : "Inactive"}
+            </span>
+          </>
+        } 
+        description="View supplier details." 
+        icon={Truck}
+      >
+        <Button size="sm" onClick={() => navigate(-1)}>
+          Back
+        </Button>
+      </PageHeader>
 
       <div className="border-b">
         <nav className="-mb-px flex space-x-8" aria-label="Tabs">

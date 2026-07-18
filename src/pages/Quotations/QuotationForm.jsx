@@ -1,3 +1,4 @@
+import { PageHeader } from '../../components/ui/PageHeader';
 import { useState, useMemo, useRef, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetProductsQuery } from "../../features/products/productApi";
@@ -5,8 +6,7 @@ import { useGetCustomersQuery, useCreateCustomerMutation } from "../../features/
 import { useCreateQuotationMutation, useGetQuotationByIdQuery, useUpdateQuotationMutation } from "../../features/quotations/quotationsApi";
 import { Button } from "../../components/ui/Button";
 import { Input } from "../../components/ui/Input";
-import { Trash2, Save, Plus, Calendar } from "lucide-react";
-import { BackButton } from "../../components/ui/BackButton";
+import {  Trash2, Save, Plus, Calendar , FileText } from 'lucide-react';
 import { AsyncSearchDropdown } from "../../components/ui/AsyncSearchDropdown";
 import toast from "react-hot-toast";
 
@@ -145,11 +145,12 @@ export const QuotationForm = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-3">
-        <BackButton to="/quotations" />
-        <span className="text-muted-foreground">/</span>
-        <h1 className="text-2xl font-bold tracking-tight">{isEdit ? "Edit Quotation" : "New Quotation"}</h1>
-      </div>
+      <PageHeader title={isEdit ? "Edit Quotation" : "New Quotation"} description="Create or edit a quotation." icon={FileText} 
+        >
+        <Button variant="outline" size="sm" onClick={() => navigate(-1)}>
+          Discard
+        </Button>
+      </PageHeader>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="md:col-span-2 space-y-6">

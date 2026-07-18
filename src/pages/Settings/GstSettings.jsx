@@ -1,11 +1,11 @@
+import { PageHeader } from '../../components/ui/PageHeader';
 import { useState } from "react";
-import { Plus, Edit, Trash2, CheckCircle2, XCircle } from "lucide-react";
+import {  Plus, Edit, Trash2, CheckCircle2, XCircle , Percent } from 'lucide-react';
 import toast from "react-hot-toast";
 import { useGetGstSlabsQuery, useCreateGstSlabMutation, useUpdateGstSlabMutation, useDeleteGstSlabMutation } from "../../features/gst/gstApi";
 import { Button } from "../../components/ui/Button";
 import { Input } from "../../components/ui/Input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../../components/ui/Table";
-import { BackButton } from "../../components/ui/BackButton";
 
 export const GstSettings = () => {
   const { data, isLoading, isError } = useGetGstSlabsQuery();
@@ -65,11 +65,12 @@ export const GstSettings = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-3">
-        <BackButton />
-        <span className="text-muted-foreground">/</span>
-        <h1 className="text-2xl font-bold tracking-tight">GST Master Settings</h1>
-      </div>
+      <PageHeader title="GST Master Settings" description="Configure GST rates." icon={Percent} 
+        >
+        <Button variant="outline" size="sm" onClick={() => navigate(-1)}>
+          Discard
+        </Button>
+      </PageHeader>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="md:col-span-1 border rounded-lg p-5 bg-card shadow-sm h-fit">

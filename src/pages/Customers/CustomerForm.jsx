@@ -1,10 +1,10 @@
+import { PageHeader } from '../../components/ui/PageHeader';
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useCreateCustomerMutation, useUpdateCustomerMutation, useGetCustomerByIdQuery } from "../../features/customers/customersApi";
 import { Button } from "../../components/ui/Button";
 import { Input } from "../../components/ui/Input";
-import { Save } from "lucide-react";
-import { BackButton } from "../../components/ui/BackButton";
+import {  Save , Users } from 'lucide-react';
 import toast from "react-hot-toast";
 
 export const CustomerForm = () => {
@@ -53,11 +53,12 @@ export const CustomerForm = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-3">
-        <BackButton />
-        <span className="text-muted-foreground">/</span>
-        <h1 className="text-2xl font-bold tracking-tight">{isEditing ? "Edit Customer" : "Add New Customer"}</h1>
-      </div>
+      <PageHeader title={isEditing ? "Edit Customer" : "Add New Customer"} description="Manage customer information." icon={Users} 
+        >
+        <Button variant="outline" size="sm" onClick={() => navigate(-1)}>
+          Discard
+        </Button>
+      </PageHeader>
 
       <div className="rounded-xl border bg-card p-6 shadow-sm">
         <form onSubmit={handleSubmit} className="space-y-4">

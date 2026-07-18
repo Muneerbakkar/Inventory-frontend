@@ -1,3 +1,4 @@
+import { PageHeader } from '../../components/ui/PageHeader';
 import { useState, useMemo, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetProductsQuery } from "../../features/products/productApi";
@@ -6,8 +7,7 @@ import { useGetReferralsQuery, useCreateReferralMutation } from "../../features/
 import { useCreateInvoiceMutation, useUpdateInvoiceMutation, useGetInvoiceByIdQuery } from "../../features/sales/salesApi";
 import { Button } from "../../components/ui/Button";
 import { Input } from "../../components/ui/Input";
-import { Trash2, Save } from "lucide-react";
-import { BackButton } from "../../components/ui/BackButton";
+import {  Trash2, Save , Receipt } from 'lucide-react';
 import { AsyncSearchDropdown } from "../../components/ui/AsyncSearchDropdown";
 import toast from "react-hot-toast";
 
@@ -193,11 +193,12 @@ export const NewSale = () => {
 
   return (
     <div className="space-y-6 pb-12">
-      <div className="flex items-center gap-3">
-        <BackButton to="/sales" />
-        <span className="text-muted-foreground">/</span>
-        <h1 className="text-2xl font-bold tracking-tight">{isEditing ? "Edit Sale" : "New Sale"}</h1>
-      </div>
+      <PageHeader title={isEditing ? "Edit Sale" : "New Sale"} description="Create a new sales invoice." icon={Receipt} 
+        >
+        <Button variant="outline" size="sm" onClick={() => navigate(-1)}>
+          Discard
+        </Button>
+      </PageHeader>
 
       <div className="space-y-6">
         <div className="space-y-6">

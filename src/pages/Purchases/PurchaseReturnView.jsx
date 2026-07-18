@@ -1,8 +1,9 @@
+import { PageHeader } from '../../components/ui/PageHeader';
 import { useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useGetPurchaseReturnByIdQuery } from "../../features/purchases/purchasesApi";
 import { Button } from "../../components/ui/Button";
-import { Printer } from "lucide-react";
+import {  Printer , Undo2 } from 'lucide-react';
 import { BackButton } from "../../components/ui/BackButton";
 import { PaginationControls } from "../../components/ui/PaginationControls";
 
@@ -33,41 +34,30 @@ export const PurchaseReturnView = () => {
 
   return (
     <div className="space-y-4 max-w-[794px] mx-auto pb-8 print:max-w-none print:mx-0 print:pb-0 print:space-y-0 print:min-h-[99vh] print:flex print:flex-col">
-      <div className="flex items-center justify-between print:hidden">
-        <BackButton className="print:hidden" to="/purchase-returns" />
-        <Button onClick={() => window.print()}>
-          <Printer className="mr-2 h-4 w-4" /> Print Return
-        </Button>
+      <div className="flex items-center justify-between mb-4 print:hidden">
+        <BackButton />
+        <Button onClick={() => window.print()}><Printer className="w-4 h-4 mr-2" /> Print</Button>
       </div>
-
-      <div className="w-full overflow-x-auto pb-4 print:pb-0 print:overflow-visible print:flex-1 print:flex print:flex-col">
-        <div className="min-w-[794px] flex justify-center print:min-w-0 print:flex-1 print:flex print:flex-col">
-          <div className="bg-white text-black p-4 rounded-lg shadow-sm border print:shadow-none print:border-none print:p-0 print:bg-transparent print:flex-1 print:flex print:flex-col w-[794px] print:w-auto">
-        
-        {/* PDF-like Outer Border Wrapper */}
-        <div className="p-6 border border-gray-300 print:border-none flex flex-col min-h-[700px] print:min-h-0 print:flex-1">
-          
-          {/* Header */}
-          <div className="flex flex-row justify-between items-start pb-4 print:break-inside-avoid">
-            <div className="space-y-0.5 text-xs text-gray-800">
-              <div className="flex flex-col items-start gap-2 mb-3">
-                <img src="/logo.png" alt="Logo" className="h-16 w-16 rounded-md" />
-                <h1 className="text-xl font-black uppercase tracking-wide text-black">{settings?.name || "YOUR COMPANY PVT. LTD."}</h1>
-              </div>
+      
+      <div className="flex justify-between items-start mb-6">
+          <div className="flex gap-4">
+            <img src="/logo.png" alt="Company Logo" className="h-16 object-contain" />
+            <div>
+              <h1 className="text-xl font-bold text-black mb-1">{settings?.name || "YOUR COMPANY PVT. LTD."}</h1>
               {settings?.address ? (
-                <p className="whitespace-pre-wrap leading-relaxed max-w-sm">{settings.address}</p>
-              ) : (
+                  <p className="whitespace-pre-wrap text-sm text-gray-700 max-w-sm">{settings.address}</p>
+                ) : (
                 <>
                   <p className="font-bold text-sm mb-1">INVENQ</p>
-                  <p>Room No: 122, Building Name, 1st Floor</p>
-                  <p>Main Road, City, State - 123456</p>
-                  <p>Phone: +91 98765 43210 | Email: info@yourcompany.com</p>
-                  <p>Web: www.yourcompany.com</p>
+                  <p className="text-sm">Room No: 122, Building Name, 1st Floor</p>
+                  <p className="text-sm">Main Road, City, State - 123456</p>
+                  <p className="text-sm">Phone: +91 98765 43210 | Email: info@yourcompany.com</p>
+                  <p className="text-sm">Web: www.yourcompany.com</p>
                 </>
               )}
-              {settings?.gstin && <p className="font-bold mt-1">GST: {settings.gstin}</p>}
-              {settings?.pan && <p className="font-bold">PAN: {settings.pan}</p>}
+              {settings?.gstin && <p className="font-bold text-sm mt-1">GST: {settings.gstin}</p>}
             </div>
+          </div>
             
             <div className="text-right mt-0">
               <h2 className="text-2xl font-black uppercase text-black mb-4">PURCHASE RETURN</h2>
@@ -265,14 +255,9 @@ export const PurchaseReturnView = () => {
             <div className="w-48">
               <div className="border-t border-gray-400 pt-1 text-center text-xs font-semibold">
                 Authorized Signatory
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-      </div>
-      </div>
-    </div>
-  );
+</div>
+</div>
+</div>
+</div>
+);
 };

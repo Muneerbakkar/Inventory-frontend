@@ -1,10 +1,11 @@
+import { PageHeader } from '../../components/ui/PageHeader';
 import { PaginationControls } from "../../components/ui/PaginationControls";
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGetQuotationsQuery, useConvertToInvoiceMutation, useDeleteQuotationMutation, useUpdateQuotationStatusMutation } from "../../features/quotations/quotationsApi";
 import { Button } from "../../components/ui/Button";
 import { Input } from "../../components/ui/Input";
-import { Plus, ArrowRightLeft, Eye, Edit, Trash2, Search, Calendar } from "lucide-react";
+import {  Plus, ArrowRightLeft, Eye, Edit, Trash2, Search, Calendar , FileText } from 'lucide-react';
 import toast from "react-hot-toast";
 
 export const QuotationList = () => {
@@ -94,12 +95,11 @@ export const QuotationList = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold tracking-tight">Quotations</h1>
+      <PageHeader title="Quotations" description="Manage customer quotations." icon={FileText}>
         <Button onClick={() => navigate("/quotations/new")}>
           <Plus className="mr-2 h-4 w-4" /> New Quotation
         </Button>
-      </div>
+      </PageHeader>
 
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-md bg-card p-4 shadow-sm border">
         <div className="relative flex-1 w-full sm:max-w-sm">

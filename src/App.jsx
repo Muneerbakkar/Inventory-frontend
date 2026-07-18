@@ -37,6 +37,8 @@ import { QuotationList } from "./pages/Quotations/QuotationList";
 import { QuotationForm } from "./pages/Quotations/QuotationForm";
 import { QuotationDetail } from "./pages/Quotations/QuotationDetail";
 import { Notifications } from "./pages/Notifications/Notifications";
+import { RolesPermissions } from "./pages/Settings/RolesPermissions";
+import { RoleForm } from "./pages/Settings/RoleForm";
 
 function App() {
   return (
@@ -58,9 +60,11 @@ function App() {
           <Route path="products/:id" element={<ProductDetail />} />
           <Route path="products/:id/edit" element={<ProductForm />} />
           <Route path="products/:id/adjust" element={<StockAdjustment />} />
-
           {/* Settings Routes */}
           <Route path="settings/gst" element={<GstSettings />} />
+          <Route path="settings/roles" element={<RolesPermissions />} />
+          <Route path="settings/roles/new" element={<RoleForm />} />
+          <Route path="settings/roles/:id" element={<RoleForm />} />
 
           {/* Category Routes */}
           <Route path="categories" element={<CategoryList />} />

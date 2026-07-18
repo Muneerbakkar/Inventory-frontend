@@ -1,9 +1,10 @@
+import { PageHeader } from '../../components/ui/PageHeader';
 import { PaginationControls } from "../../components/ui/PaginationControls";
 import { useState, useEffect, useRef } from 'react';
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from '../../components/ui/Table';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
-import { Search, Calendar } from 'lucide-react';
+import {  Search, Calendar , Activity } from 'lucide-react';
 
 const ROLE_COLORS = {
   SuperAdmin: "bg-purple-500/10 text-purple-400",
@@ -64,9 +65,7 @@ export const AuditLog = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold tracking-tight">Audit Logs</h1>
-      </div>
+      <PageHeader title="Audit Logs" description="Track system activity." icon={Activity} />
 
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-md bg-card p-4 shadow-sm border">
         <div className="relative flex-1 w-full sm:max-w-sm">

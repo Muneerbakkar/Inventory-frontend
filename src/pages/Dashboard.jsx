@@ -1,7 +1,8 @@
+import { PageHeader } from '../components/ui/PageHeader';
 import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { 
+import {  
   Package, 
   TrendingUp, 
   ShoppingBag, 
@@ -14,7 +15,7 @@ import {
   RefreshCw,
   ArrowUpRight,
   Calendar
-} from 'lucide-react';
+, LayoutDashboard } from 'lucide-react';
 import ReactApexChart from 'react-apexcharts';
 import { VerticalStackedBarChart } from '../components/ui/Charts';
 import { logout } from '../features/auth/authSlice';
@@ -187,14 +188,9 @@ export const Dashboard = () => {
   return (
     <div className="space-y-6 pb-12">
       {/* Header section with Date Filters */}
-      <div className="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-4 border-b border-border pb-5">
-        <div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-foreground font-sans">Dashboard</h1>
-          <p className="text-sm text-muted-foreground mt-1">Real-time summaries, trends, and transaction history.</p>
-        </div>
-        
+      <PageHeader title="Dashboard" description="Overview of your business." icon={LayoutDashboard}>
         {/* Controls Container */}
-        <div className="flex flex-wrap items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto">
           {/* Preset Range Selector */}
           <div className="flex items-center gap-2">
             <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Range:</span>
@@ -260,7 +256,7 @@ export const Dashboard = () => {
             {refreshing ? 'Refreshing...' : 'Refresh'}
           </button>
         </div>
-      </div>
+      </PageHeader>
 
       {/* Summary Cards Grid */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">

@@ -1,3 +1,4 @@
+import { PageHeader } from '../../components/ui/PageHeader';
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { Edit, Package, Hash, Tag, Building2, Clock, AlertTriangle, Banknote, ShieldAlert } from "lucide-react";
 import { BackButton } from "../../components/ui/BackButton";
@@ -38,25 +39,26 @@ export const ProductDetail = () => {
   return (
     <div className="space-y-5">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div className="flex items-center gap-3 w-full sm:w-auto flex-wrap">
-          <BackButton />
-          <span className="text-muted-foreground">/</span>
-          <h1 className="text-2xl font-bold tracking-tight">{product.name}</h1>
-          <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${
-            product.isActive !== false
-              ? "bg-green-500/10 text-green-500"
-              : "bg-red-500/10 text-red-500"
-          }`}>
-            {product.isActive !== false ? "Active" : "Inactive"}
-          </span>
-        </div>
-        <Link to={`/products/${id}/edit`}>
-          <Button size="sm">
-            <Edit className="mr-2 h-4 w-4" /> Edit Product
-          </Button>
-        </Link>
-      </div>
+      <PageHeader 
+        title={
+          <>
+            {product.name}
+            <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${
+                product.isActive !== false
+                  ? "bg-green-500/10 text-green-500"
+                  : "bg-red-500/10 text-red-500"
+              }`}>
+              {product.isActive !== false ? "Active" : "Inactive"}
+            </span>
+          </>
+        } 
+        description="View product details and history." 
+        icon={Package}
+      >
+        <Button size="sm" onClick={() => navigate(-1)}>
+          Back
+        </Button>
+      </PageHeader>
 
       {/* Basic Info */}
       <Section icon={Package} title="Basic Information">

@@ -1,3 +1,4 @@
+import { PageHeader } from '../../components/ui/PageHeader';
 import { PaginationControls } from "../../components/ui/PaginationControls";
 import { useState, useEffect, useRef } from 'react';
 import { Bell, CheckCheck, Eye, Clock, ShieldAlert, Trash2, Calendar, AlertTriangle, CreditCard } from 'lucide-react';
@@ -217,24 +218,18 @@ export const Notifications = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <Bell className="h-6 w-6 text-primary" />
-          <h1 className="text-2xl font-bold tracking-tight">Notifications</h1>
-        </div>
-        <div className="flex items-center gap-2">
-          {selectedIds.length > 0 && (
-            <Button onClick={handleDeleteSelected} variant="destructive" size="sm">
-              <Trash2 className="mr-2 h-4 w-4" /> Delete Selected ({selectedIds.length})
-            </Button>
-          )}
-          {unreadNotifications.length > 0 && (
-            <Button onClick={handleMarkAllAsRead} variant="outline" size="sm">
-              <CheckCheck className="mr-2 h-4 w-4" /> Mark all as read
-            </Button>
-          )}
-        </div>
-      </div>
+      <PageHeader title="Notifications" description="View your recent alerts." icon={Bell}>
+        {selectedIds.length > 0 && (
+          <Button onClick={handleDeleteSelected} variant="destructive" size="sm" className="w-full sm:w-auto">
+            <Trash2 className="mr-2 h-4 w-4" /> Delete Selected ({selectedIds.length})
+          </Button>
+        )}
+        {unreadNotifications.length > 0 && (
+          <Button onClick={handleMarkAllAsRead} variant="outline" size="sm" className="w-full sm:w-auto">
+            <CheckCheck className="mr-2 h-4 w-4" /> Mark all as read
+          </Button>
+        )}
+      </PageHeader>
 
       {/* Date Filters block */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-end gap-4 rounded-md bg-card p-4 shadow-sm border">
@@ -361,4 +356,3 @@ export const Notifications = () => {
     </div>
   );
 };
-
