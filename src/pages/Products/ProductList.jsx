@@ -154,7 +154,7 @@ export const ProductList = () => {
         </div>
       </div>
 
-      <div className="rounded-md border bg-card shadow-sm overflow-x-auto w-full">
+      <div className="<div md:rounded-md md:border md:bg-card md:shadow-sm overflow-x-auto w-full">
         <Table>
           <TableHeader>
             <TableRow>

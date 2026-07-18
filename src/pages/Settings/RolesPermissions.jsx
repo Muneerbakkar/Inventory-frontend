@@ -62,7 +62,7 @@ export function RolesPermissions() {
         </Link>
       </PageHeader>
 
-      <div className="border border-border/50 shadow-sm rounded-xl bg-card overflow-x-auto">
+      <div className="<div md:border md:border-md:border/50 md:shadow-sm md:rounded-xl md:bg-card overflow-x-auto">
         <Table>
           <TableHeader>
             <TableRow className="bg-muted/50">

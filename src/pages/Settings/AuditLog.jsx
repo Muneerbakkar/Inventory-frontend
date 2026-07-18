@@ -133,7 +133,7 @@ export const AuditLog = () => {
         </div>
       </div>
 
-      <div className="bg-card rounded-lg border shadow-sm">
+      <div className="<div md:bg-card md:rounded-lg md:border md:shadow-sm">
         <Table>
           <TableHeader>
             <TableRow>

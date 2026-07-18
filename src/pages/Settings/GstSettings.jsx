@@ -132,8 +132,8 @@ export const GstSettings = () => {
           </form>
         </div>
 
-        <div className="md:col-span-2 rounded-lg border bg-card shadow-sm overflow-x-auto w-full">
-          <Table>
+        <div className="<div md:col-span-2 md:rounded-lg md:border md:bg-card md:shadow-sm overflow-x-auto w-full">
+        <Table>
             <TableHeader>
               <TableRow>
                 <TableHead>Label</TableHead>

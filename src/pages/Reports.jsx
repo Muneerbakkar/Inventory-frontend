@@ -198,7 +198,7 @@ export const Reports = () => {
           <SummaryCard title="Total Balance Due" value={`₹${summary.totalBalanceDue?.toLocaleString() || 0}`} valueClass="text-destructive" />
         </div>
         
-        <div className="rounded-md border bg-card shadow-sm overflow-x-auto w-full">
+        <div className="<div md:rounded-md md:border md:bg-card md:shadow-sm overflow-x-auto w-full">
         <Table>
           <TableHeader>
             <TableRow>
@@ -243,7 +243,7 @@ export const Reports = () => {
           <SummaryCard title="Total Balance Due" value={`₹${summary.totalBalanceDue?.toLocaleString() || 0}`} valueClass="text-destructive" />
         </div>
         
-        <div className="rounded-md border bg-card shadow-sm overflow-x-auto w-full">
+        <div className="<div md:rounded-md md:border md:bg-card md:shadow-sm overflow-x-auto w-full">
         <Table>
           <TableHeader>
             <TableRow>
@@ -291,7 +291,7 @@ export const Reports = () => {
           )}
         </div>
         
-        <div className="rounded-md border bg-card shadow-sm overflow-x-auto w-full">
+        <div className="<div md:rounded-md md:border md:bg-card md:shadow-sm overflow-x-auto w-full">
         <Table>
           <TableHeader>
             <TableRow>
@@ -353,7 +353,7 @@ export const Reports = () => {
 
         <div>
           <h3 className="text-md font-semibold mb-3 border-b pb-2">Sales GST Details (Output)</h3>
-          <div className="rounded-md border bg-card shadow-sm overflow-x-auto w-full">
+          <div className="<div md:rounded-md md:border md:bg-card md:shadow-sm overflow-x-auto w-full">
         <Table>
             <TableHeader>
               <TableRow>
@@ -387,7 +387,7 @@ export const Reports = () => {
 
         <div>
           <h3 className="text-md font-semibold mb-3 border-b pb-2">Purchase GST Details (Input)</h3>
-          <div className="rounded-md border bg-card shadow-sm overflow-x-auto w-full">
+          <div className="<div md:rounded-md md:border md:bg-card md:shadow-sm overflow-x-auto w-full">
         <Table>
             <TableHeader>
               <TableRow>
@@ -433,7 +433,7 @@ export const Reports = () => {
           <SummaryCard title="Total Commission Earned" value={`₹${summary.totalCommissionPaid?.toLocaleString() || 0}`} valueClass="text-primary" />
         </div>
         
-        <div className="rounded-md border bg-card shadow-sm overflow-x-auto w-full">
+        <div className="<div md:rounded-md md:border md:bg-card md:shadow-sm overflow-x-auto w-full">
         <Table>
           <TableHeader>
             <TableRow>

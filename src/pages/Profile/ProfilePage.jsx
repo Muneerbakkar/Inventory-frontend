@@ -1,5 +1,6 @@
 import { PageHeader } from '../../components/ui/PageHeader';
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -31,6 +32,7 @@ export const ProfilePage = () => {
   const dispatch = useDispatch();
   const { user, token } = useSelector((state) => state.auth);
   const [activeTab, setActiveTab] = useState("profile");
+  const navigate = useNavigate();
 
   const [updateMe, { isLoading: isUpdatingProfile }] = useUpdateMeMutation();
   const [updatePassword, { isLoading: isUpdatingPassword }] = useUpdatePasswordMutation();
@@ -85,17 +87,9 @@ export const ProfilePage = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-3">
-        <BackButton />
-        <span className="text-muted-foreground">/</span>
-        <div>
-          <PageHeader title="My Profile" description="Manage your personal account." icon={UserCircle} />
-          <p className="text-sm text-muted-foreground mt-1">Manage your account details and security settings.</p>
-        </div>
-      </div>
-
-
-
+      <PageHeader title="My Profile" description="Manage your personal account and security settings." icon={UserCircle}>
+        <Button size="sm" onClick={() => navigate(-1)}>Back</Button>
+      </PageHeader>
       {/* Tabs */}
       <div className="flex gap-1 rounded-lg border bg-card p-1 w-fit">
         {tabs.map((tab) => (
