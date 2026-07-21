@@ -18,7 +18,8 @@ export const NewSale = () => {
   const { data: invoiceData, isLoading: invoiceLoading } = useGetInvoiceByIdQuery(id, { skip: !isEditing });
   const [createInvoice, { isLoading: isCreating }] = useCreateInvoiceMutation();
   const [updateInvoice, { isLoading: isUpdating }] = useUpdateInvoiceMutation();
-
+  const [createCustomer] = useCreateCustomerMutation();
+  const [createReferral] = useCreateReferralMutation();
   const isSubmitting = isCreating || isUpdating;
 
   const [customerId, setCustomerId] = useState("");
@@ -27,6 +28,10 @@ export const NewSale = () => {
   const [referralName, setReferralName] = useState("");
   const [paymentMode, setPaymentMode] = useState("Cash");
   const [amountPaid, setAmountPaid] = useState("");
+
+  const [showReferralModal, setShowReferralModal] = useState(false);
+  const [newReferralName, setNewReferralName] = useState("");
+  const [newReferralPhone, setNewReferralPhone] = useState("");
 
   const [items, setItems] = useState([
     { productId: "", productName: "", quantity: 1, maxQty: 0, sellingPrice: 0, gstPercent: 0, originalQty: 0 }
@@ -64,15 +69,31 @@ export const NewSale = () => {
       const res = await createCustomer({ name }).unwrap();
       toast.success("Customer added");
       setCustomerId(res.data?.customer?._id || res.customer?._id || res._id);
+      setCustomerName(res.data?.customer?.name || res.customer?.name || res.name || name);
     } catch (err) { toast.error("Failed to add customer"); }
   };
 
-  const handleAddReferral = async (name) => {
+  const handleAddReferral = (name) => {
+    setNewReferralName(name);
+    setNewReferralPhone("");
+    setShowReferralModal(true);
+  };
+
+  const handleConfirmAddReferral = async () => {
+    if (!newReferralName.trim()) {
+      toast.error("Name is required");
+      return;
+    }
     try {
-      const res = await createReferral({ name }).unwrap();
+      const res = await createReferral({ name: newReferralName, phone: newReferralPhone }).unwrap();
       toast.success("Referral added");
       setReferralId(res.data?.referral?._id || res.referral?._id || res._id);
-    } catch (err) { toast.error("Failed to add referral"); }
+      setReferralName(res.data?.referral?.name || res.referral?.name || res.name || newReferralName);
+      setShowReferralModal(false);
+    } catch (err) { 
+      console.error("Add referral error:", err);
+      toast.error(err?.data?.message || err?.message || "Failed to add referral"); 
+    }
   };
 
   const handleProductSelect = (index, productId, product) => {
@@ -364,6 +385,36 @@ export const NewSale = () => {
                 </div>
         </div>
       </div>
+
+      {showReferralModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+          <div className="w-full max-w-md rounded-lg bg-card p-6 shadow-lg border">
+            <h2 className="mb-4 text-lg font-semibold">Add New Referral</h2>
+            <div className="space-y-4">
+              <div>
+                <label className="mb-1 block text-sm font-medium">Name *</label>
+                <Input 
+                  value={newReferralName} 
+                  onChange={(e) => setNewReferralName(e.target.value)} 
+                  placeholder="Referral Name"
+                />
+              </div>
+              <div>
+                <label className="mb-1 block text-sm font-medium">Phone</label>
+                <Input 
+                  value={newReferralPhone} 
+                  onChange={(e) => setNewReferralPhone(e.target.value)} 
+                  placeholder="Phone Number"
+                />
+              </div>
+            </div>
+            <div className="mt-6 flex justify-end gap-3">
+              <Button variant="outline" onClick={() => setShowReferralModal(false)}>Cancel</Button>
+              <Button onClick={handleConfirmAddReferral}>Save</Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

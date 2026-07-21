@@ -5,8 +5,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import toast from "react-hot-toast";
-import { Save, User, Mail, Phone, Shield, Lock } from "lucide-react";
-import { useCreateUserMutation, useUpdateUserMutation, useGetUserByIdQuery } from "../../features/users/userApi";
+import { Save, User, Mail, Phone, Shield, Lock, Eye, EyeOff } from "lucide-react";
+import { useCreateUserMutation, useUpdateUserMutation, useGetUserByIdQuery, useUpdateUserPasswordMutation } from "../../features/users/userApi";
 import { Input } from "../../components/ui/Input";
 import { Button } from "../../components/ui/Button";
 import api from "../../lib/api";
@@ -24,6 +24,7 @@ const editSchema = yup.object({
   email: yup.string().email("Invalid email").required("Email is required"),
   phone: yup.string().required("Phone is required"),
   role: yup.string().required("Role is required"),
+  password: yup.string().transform(v => v === '' ? undefined : v).notRequired().min(8, "Password must be at least 8 characters"),
 });
 
 export const UserForm = () => {
@@ -34,6 +35,7 @@ export const UserForm = () => {
   const { data, isLoading } = useGetUserByIdQuery(id, { skip: !isEditing });
   const [createUser, { isLoading: isCreating }] = useCreateUserMutation();
   const [updateUser, { isLoading: isUpdating }] = useUpdateUserMutation();
+  const [updateUserPassword] = useUpdateUserPasswordMutation();
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm({
     resolver: yupResolver(isEditing ? editSchema : createSchema),
@@ -41,6 +43,7 @@ export const UserForm = () => {
 
   const [roles, setRoles] = useState([]);
   const [loadingRoles, setLoadingRoles] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     api.get("/roles")
@@ -64,7 +67,11 @@ export const UserForm = () => {
   const onSubmit = async (formData) => {
     try {
       if (isEditing) {
-        await updateUser({ id, ...formData }).unwrap();
+        const { password, ...updateData } = formData;
+        await updateUser({ id, ...updateData }).unwrap();
+        if (password) {
+          await updateUserPassword({ id, password }).unwrap();
+        }
         toast.success("User updated successfully!");
       } else {
         await createUser(formData).unwrap();
@@ -86,7 +93,7 @@ export const UserForm = () => {
         </Button>
       </PageHeader>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="rounded-xl border bg-card p-6 shadow-sm space-y-6">
+      <form onSubmit={handleSubmit(onSubmit)} className="rounded-xl border bg-card p-6 shadow-sm space-y-6" autoComplete="off">
         <h2 className="text-base font-semibold border-b pb-3">User Information</h2>
 
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
@@ -102,7 +109,7 @@ export const UserForm = () => {
             <label className="text-sm font-medium flex items-center gap-2">
               <Mail className="h-4 w-4 text-muted-foreground" /> Email <span className="text-destructive">*</span>
             </label>
-            <Input {...register("email")} type="email" placeholder="Email address" />
+            <Input {...register("email")} type="email" placeholder="Email address" autoComplete="off" />
             {errors.email && <p className="text-xs text-destructive">{errors.email.message}</p>}
           </div>
 
@@ -128,15 +135,24 @@ export const UserForm = () => {
             {errors.role && <p className="text-xs text-destructive">{errors.role.message}</p>}
           </div>
 
-          {!isEditing && (
-            <div className="space-y-2 sm:col-span-2">
-              <label className="text-sm font-medium flex items-center gap-2">
-                <Lock className="h-4 w-4 text-muted-foreground" /> Password <span className="text-destructive">*</span>
-              </label>
-              <Input {...register("password")} type="password" placeholder="Minimum 8 characters" />
-              {errors.password && <p className="text-xs text-destructive">{errors.password.message}</p>}
+          <div className="space-y-2 sm:col-span-2">
+            <label className="text-sm font-medium flex items-center gap-2">
+              <Lock className="h-4 w-4 text-muted-foreground" /> {isEditing ? "New Password" : "Password"} {!isEditing && <span className="text-destructive">*</span>}
+            </label>
+            <div className="relative">
+              <Input {...register("password")} type={showPassword ? "text" : "password"} placeholder={isEditing ? "Leave blank to keep current password" : "Minimum 8 characters"} className="pr-10" autoComplete="new-password" />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground focus:outline-none"
+                tabIndex="-1"
+                title={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              </button>
             </div>
-          )}
+            {errors.password && <p className="text-xs text-destructive">{errors.password.message}</p>}
+          </div>
         </div>
 
         <div className="flex justify-end gap-3 pt-2 border-t">

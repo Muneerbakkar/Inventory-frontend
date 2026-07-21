@@ -38,7 +38,8 @@ export const InvoiceView = () => {
         <Button onClick={() => window.print()}><Printer className="w-4 h-4 mr-2" /> Print</Button>
       </div>
       
-      <div className="flex justify-between items-start mb-6">
+      <div className="bg-white text-black p-8 sm:p-10 shadow-md rounded-lg print:p-0 print:shadow-none print:rounded-none flex flex-col min-h-[800px] print:min-h-0">
+        <div className="flex justify-between items-start mb-6">
           <div className="flex gap-4">
             <img src="/logo.png" alt="Company Logo" className="h-16 object-contain" />
             <div>
@@ -275,9 +276,10 @@ export const InvoiceView = () => {
             <div className="w-48">
               <div className="border-t border-gray-400 pt-1 text-center text-xs font-semibold">
                 Authorized Signatory
-</div>
-</div>
-</div>
-</div>
-);
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  );
 };

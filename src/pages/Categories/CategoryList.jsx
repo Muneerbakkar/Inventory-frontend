@@ -2,12 +2,23 @@ import { PageHeader } from '../../components/ui/PageHeader';
 import { PaginationControls } from "../../components/ui/PaginationControls";
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import {  Plus, Edit, Trash2, Search, Calendar , Tags } from 'lucide-react';
+import {  Plus, Edit, Trash2, Search, Calendar, Tags, X } from 'lucide-react';
 import toast from "react-hot-toast";
 import { useGetCategoriesQuery, useDeleteCategoryMutation, useUpdateCategoryMutation } from "../../features/categories/categoryApi";
 import { Button } from "../../components/ui/Button";
 import { Input } from "../../components/ui/Input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../../components/ui/Table";
+
+const renderPath = (parentCat) => {
+  if (!parentCat) return null;
+  const parts = [];
+  let current = parentCat;
+  while (current) {
+    parts.unshift(current.name);
+    current = current.parentCategory;
+  }
+  return parts.join(" > ") + " > ";
+};
 
 export const CategoryList = () => {
   const [page, setPage] = useState(1);
@@ -90,17 +101,29 @@ export const CategoryList = () => {
 
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-md bg-card p-4 shadow-sm border">
         <div className="relative flex-1 w-full sm:max-w-sm">
-          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
             type="text"
             placeholder="Search categories..."
-            className="pl-9"
+            className="pl-9 pr-9"
             value={search}
             onChange={(e) => {
               setSearch(e.target.value);
               setPage(1);
             }}
           />
+          {search && (
+            <button
+              onClick={() => {
+                setSearch("");
+                setPage(1);
+              }}
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground focus:outline-none flex items-center justify-center"
+              title="Clear search"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          )}
         </div>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full sm:w-auto">
@@ -186,7 +209,7 @@ export const CategoryList = () => {
                   <TableCell data-label="Name" className="font-medium">
                     {category.parentCategory && (
                       <span className="text-muted-foreground mr-1 text-xs">
-                        {category.parentCategory.name} &gt;
+                        {renderPath(category.parentCategory)}
                       </span>
                     )}
                     {category.name}
@@ -215,16 +238,14 @@ export const CategoryList = () => {
                   </TableCell>
                   <TableCell data-label="Actions" className="text-right">
                     <div className="flex items-center justify-end -mr-2 sm:mr-0 gap-1">
-
-                    <Link to={`/categories/${category._id}/edit`}>
-                      <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-                        <Edit className="h-4 w-4" />
+                      <Link to={`/categories/${category._id}/edit`}>
+                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                          <Edit className="h-4 w-4" />
+                        </Button>
+                      </Link>
+                      <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-red-600 hover:text-red-700 hover:bg-red-50" onClick={() => handleDelete(category._id, category.name)}>
+                        <Trash2 className="h-4 w-4" />
                       </Button>
-                    </Link>
-                    <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-red-600 hover:text-red-700 hover:bg-red-50" onClick={() => handleDelete(category._id, category.name)}>
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
-                  
                     </div>
                   </TableCell>
                 </TableRow>
@@ -244,4 +265,3 @@ export const CategoryList = () => {
     </div>
   );
 };
-

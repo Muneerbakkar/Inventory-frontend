@@ -144,13 +144,13 @@ export const CustomerList = () => {
         <table className="w-full text-left text-sm">
           <thead className="bg-muted/50 text-muted-foreground border-b">
             <tr>
-              <th className="p-4 font-medium">Customer ID</th>
+              <th className="p-4 font-medium whitespace-nowrap">Customer ID</th>
               <th className="p-4 font-medium">Name</th>
-              <th className="p-4 font-medium">Phone</th>
+              <th className="p-4 font-medium whitespace-nowrap">Phone</th>
               <th className="p-4 font-medium">Email</th>
-              <th className="p-4 font-medium">Address</th>
-              <th className="p-4 font-medium">Added On</th>
-              <th className="p-4 font-medium text-right">Actions</th>
+              <th className="p-4 font-medium min-w-[200px]">Address</th>
+              <th className="p-4 font-medium whitespace-nowrap">Added On</th>
+              <th className="p-4 font-medium text-right whitespace-nowrap">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -169,18 +169,18 @@ export const CustomerList = () => {
             ) : (
               customers.map((customer) => (
                 <tr key={customer._id} className="border-b last:border-0 hover:bg-muted/50">
-                  <td data-label="Customer ID" className="p-4 font-mono text-sm text-foreground select-all">{customer.customId || "-"}</td>
+                  <td data-label="Customer ID" className="p-4 font-mono text-sm text-foreground select-all whitespace-nowrap">{customer.customId || "-"}</td>
                   <td data-label="Name" className="p-4 font-medium">{customer.name}</td>
-                  <td data-label="Phone" className="p-4">{customer.phone || '-'}</td>
+                  <td data-label="Phone" className="p-4 whitespace-nowrap">{customer.phone || '-'}</td>
                   <td data-label="Email" className="p-4">{customer.email || '-'}</td>
                   <td data-label="Address" className="p-4">{customer.address || '-'}</td>
-                  <td data-label="Added On" className="p-4 text-sm text-muted-foreground">
+                  <td data-label="Added On" className="p-4 text-sm text-muted-foreground whitespace-nowrap">
                     <div className="flex flex-col">
                       <span>{new Date(customer.createdAt).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" })}</span>
                       <span className="text-xs text-muted-foreground">{new Date(customer.createdAt).toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit", hour12: true })}</span>
                     </div>
                   </td>
-                  <td data-label="Actions" className="p-4 text-right">
+                  <td data-label="Actions" className="p-4 text-right whitespace-nowrap">
                     <div className="flex items-center justify-end -mr-2 sm:mr-0 gap-1">
 
                     <Link to={`/customers/${customer._id}/edit`}>

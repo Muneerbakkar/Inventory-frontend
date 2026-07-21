@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { 
   LayoutDashboard, 
@@ -23,31 +24,34 @@ import {
 import { cn } from "../../utils/cn";
 import { useLogoutApiMutation } from "../../features/auth/authApi";
 import { logout } from "../../features/auth/authSlice";
- 
+import { usePermissions } from "../../hooks/usePermissions";
+
 const navItems = [
   { name: "Dashboard", to: "/", icon: LayoutDashboard },
-  { name: "Users", to: "/users", icon: Users },
-  { name: "Suppliers", to: "/suppliers", icon: Truck },
-  { name: "Categories", to: "/categories", icon: Tags },
-  { name: "Products", to: "/products", icon: Package },
-  { name: "Customers", to: "/customers", icon: Users },
-  { name: "Quotations", to: "/quotations", icon: FileText },
-  { name: "Sales", to: "/sales", icon: ShoppingCart },
-  { name: "Referrals", to: "/referrals", icon: Users },
+  { name: "Users", to: "/users", icon: Users, permission: "Users.read" },
+  { name: "Suppliers", to: "/suppliers", icon: Truck, permission: "Suppliers.read" },
+  { name: "Categories", to: "/categories", icon: Tags, permission: "Categories.read" },
+  { name: "Products", to: "/products", icon: Package, permission: "Products.read" },
+  { name: "Customers", to: "/customers", icon: Users, permission: "Customers.read" },
+  { name: "Quotations", to: "/quotations", icon: FileText, permission: "Quotations.read" },
+  { name: "Sales", to: "/sales", icon: ShoppingCart, permission: "Sales.read" },
+  { name: "Referrals", to: "/referrals", icon: Users, permission: "Referrals.read" },
   {
     name: "Purchases",
     icon: PackagePlus,
+    permission: "Purchases.read",
     subItems: [
       { name: "Purchase Bills", to: "/purchases" },
       { name: "Purchase Returns", to: "/purchase-returns" },
       { name: "Debit Notes", to: "/debit-notes" }
     ]
   },
-  { name: "Reports", to: "/reports", icon: BarChart },
+  { name: "Reports", to: "/reports", icon: BarChart, permission: "Reports.read" },
   { name: "Notifications", to: "/notifications", icon: Bell },
   { 
     name: "Settings", 
     icon: Settings, 
+    permission: "Settings.read",
     subItems: [
       { name: "Company", to: "/settings" },
       { name: "GST", to: "/settings/gst" },
@@ -81,10 +85,12 @@ export const Sidebar = ({ isOpen, setIsOpen }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [logoutApi] = useLogoutApiMutation();
+  const { hasPermission } = usePermissions();
 
   const handleLogout = async () => {
     try {
       await logoutApi().unwrap();
+      toast.success("Logged out successfully");
     } catch (err) {
       console.error("Logout API failed", err);
     }
@@ -123,6 +129,8 @@ export const Sidebar = ({ isOpen, setIsOpen }) => {
         </div>
         <nav className="flex-1 space-y-1 overflow-y-auto p-4">
           {navItems.map((item) => {
+            if (item.permission && !hasPermission(item.permission)) return null;
+
             if (item.subItems) {
               const isOpenMenu = !!openSubMenus[item.name];
               return (

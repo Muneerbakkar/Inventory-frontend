@@ -61,6 +61,11 @@ export const PurchaseForm = () => {
         purchasePrice: product.purchasePrice || 0,
         gstPercent: product.gstSlabId?.totalPercent || 18
       };
+
+      if (product.supplierId) {
+        setSupplierId(product.supplierId._id || product.supplierId);
+        setSupplierName(product.supplierId.name || "");
+      }
     } else {
       newItems[index] = { productId: "", productName: "", quantity: 1, purchasePrice: 0, gstPercent: 0 };
     }

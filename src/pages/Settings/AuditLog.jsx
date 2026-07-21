@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from '../../components/ui/Table';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
-import {  Search, Calendar , Activity } from 'lucide-react';
+import {  Search, Calendar , Activity , X } from 'lucide-react';
 
 const ROLE_COLORS = {
   SuperAdmin: "bg-purple-500/10 text-purple-400",
@@ -69,17 +69,29 @@ export const AuditLog = () => {
 
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-md bg-card p-4 shadow-sm border">
         <div className="relative flex-1 w-full sm:max-w-sm">
-          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
             type="text"
             placeholder="Search by action, module, or user..."
-            className="pl-9"
+            className="pl-9 pr-9"
             value={search}
             onChange={(e) => {
               setSearch(e.target.value);
               setPage(1);
             }}
           />
+{search && (
+  <button
+    onClick={() => {
+      setSearch("");
+      setPage(1);
+    }}
+    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground focus:outline-none flex items-center justify-center"
+    title="Clear search"
+  >
+    <X className="h-4 w-4" />
+  </button>
+)}
         </div>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full sm:w-auto">

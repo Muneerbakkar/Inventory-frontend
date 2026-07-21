@@ -1,7 +1,7 @@
 import { PageHeader } from '../../components/ui/PageHeader';
-import { useEffect } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import {  Save , Tags } from 'lucide-react';
 import toast from "react-hot-toast";
 import * as yup from "yup";
@@ -14,6 +14,17 @@ import {
 } from "../../features/categories/categoryApi";
 import { Button } from "../../components/ui/Button";
 import { Input } from "../../components/ui/Input";
+
+const renderPath = (parentCat) => {
+  if (!parentCat) return null;
+  const parts = [];
+  let current = parentCat;
+  while (current) {
+    parts.unshift(current.name);
+    current = current.parentCategory;
+  }
+  return parts.join(" > ") + " > ";
+};
 
 const schema = yup.object().shape({
   name: yup.string().required("Category name is required"),
@@ -36,6 +47,7 @@ export const CategoryForm = () => {
     register,
     handleSubmit,
     reset,
+    control,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
@@ -122,24 +134,83 @@ export const CategoryForm = () => {
             )}
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-2 relative">
             <label htmlFor="parentCategory" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
               Parent Category (Optional)
             </label>
-            <select
-              id="parentCategory"
-              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-              {...register("parentCategory")}
-            >
-              <option value="">-- None (Top Level Category) --</option>
-              {allCategoriesData?.data?.categories
-                ?.filter(cat => cat._id !== id)
-                .map((cat) => (
-                  <option key={cat._id} value={cat._id}>
-                    {cat.parentCategory ? `${cat.parentCategory.name} > ` : ''}{cat.name}
-                  </option>
-                ))}
-            </select>
+            <Controller
+              name="parentCategory"
+              control={control}
+              render={({ field }) => {
+                const [search, setSearch] = useState("");
+                const [isOpen, setIsOpen] = useState(false);
+                const dropdownRef = useRef(null);
+
+                useEffect(() => {
+                  const handleClickOutside = (event) => {
+                    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                      setIsOpen(false);
+                    }
+                  };
+                  document.addEventListener("mousedown", handleClickOutside);
+                  return () => document.removeEventListener("mousedown", handleClickOutside);
+                }, []);
+
+                const categories = allCategoriesData?.data?.categories?.filter(cat => cat._id !== id) || [];
+                const filtered = categories.filter(c => c.name.toLowerCase().includes(search.toLowerCase()));
+                const selectedCat = categories.find(c => c._id === field.value);
+
+                return (
+                  <div className="relative" ref={dropdownRef}>
+                    <div 
+                      onClick={() => setIsOpen(!isOpen)}
+                      className={`flex h-10 w-full items-center justify-between rounded-md border bg-background px-3 py-2 text-sm cursor-pointer border-input`}
+                    >
+                      <span className={selectedCat ? "" : "text-muted-foreground"}>
+                        {selectedCat ? (
+                          <>
+                            {renderPath(selectedCat.parentCategory)}
+                            {selectedCat.name}
+                          </>
+                        ) : "Select Parent Category..."}
+                      </span>
+                    </div>
+                    
+                    {isOpen && (
+                      <div className="absolute z-50 mt-1 w-full rounded-md border bg-popover text-popover-foreground shadow-md outline-none animate-in fade-in-0 zoom-in-95">
+                        <div className="p-2 border-b">
+                           <input 
+                             autoFocus
+                             className="w-full bg-transparent outline-none text-sm placeholder:text-muted-foreground" 
+                             placeholder="Search categories..." 
+                             value={search}
+                             onChange={(e) => setSearch(e.target.value)}
+                           />
+                        </div>
+                        <div className="max-h-48 overflow-auto p-1">
+                           <div 
+                             className="cursor-pointer rounded-sm px-2 py-1.5 text-sm hover:bg-accent hover:text-accent-foreground text-muted-foreground"
+                             onClick={() => { field.onChange(""); setIsOpen(false); setSearch(""); }}
+                           >
+                             -- None (Top Level Category) --
+                           </div>
+                           {filtered.map(cat => (
+                             <div 
+                               key={cat._id} 
+                               className="cursor-pointer rounded-sm px-2 py-1.5 text-sm hover:bg-accent hover:text-accent-foreground"
+                               onClick={() => { field.onChange(cat._id); setIsOpen(false); setSearch(""); }}
+                             >
+                               {cat.parentCategory ? <span className="text-muted-foreground text-xs">{renderPath(cat.parentCategory)}</span> : ''}
+                               {cat.name}
+                             </div>
+                           ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              }}
+            />
           </div>
 
           <div className="flex justify-end gap-4 pt-4">

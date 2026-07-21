@@ -3,7 +3,7 @@ import { PaginationControls } from "../../components/ui/PaginationControls";
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import {  Plus, Edit, Trash2, Search, Eye, ToggleLeft, ToggleRight, Calendar , Users } from 'lucide-react';
+import {  Plus, Edit, Trash2, Search, Eye, ToggleLeft, ToggleRight, Calendar , Users, X } from 'lucide-react';
 import toast from "react-hot-toast";
 import { useGetUsersQuery, useDeleteUserMutation, useToggleUserStatusMutation } from "../../features/users/userApi";
 import { Button } from "../../components/ui/Button";
@@ -86,17 +86,29 @@ export const UserList = () => {
 
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-md bg-card p-4 shadow-sm border">
         <div className="relative flex-1 w-full sm:max-w-sm">
-          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
             type="text"
             placeholder="Search by name, email, phone or role..."
-            className="pl-9"
+            className="pl-9 pr-9"
             value={search}
             onChange={(e) => {
               setSearch(e.target.value);
               setPage(1);
             }}
           />
+          {search && (
+            <button
+              onClick={() => {
+                setSearch("");
+                setPage(1);
+              }}
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground focus:outline-none flex items-center justify-center"
+              title="Clear search"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          )}
         </div>
 
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
