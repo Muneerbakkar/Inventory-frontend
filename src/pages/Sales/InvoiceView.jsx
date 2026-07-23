@@ -42,10 +42,10 @@ export const InvoiceView = () => {
     let isFirstPage = true;
     
     // Tightened margins allow for higher safe capacities
-    const MAX_LOGO_FOOTER = 10;
-    const MAX_LOGO_NO_FOOTER = 16;
-    const MAX_NO_LOGO_FOOTER = 14;
-    const MAX_NO_LOGO_NO_FOOTER = 20;
+    const MAX_LOGO_FOOTER = 7;
+    const MAX_LOGO_NO_FOOTER = 15;
+    const MAX_NO_LOGO_FOOTER = 11;
+    const MAX_NO_LOGO_NO_FOOTER = 19;
     
     while (itemsAdded < invoice.items.length) {
       let capacity;
@@ -145,8 +145,9 @@ export const InvoiceView = () => {
       */}
       <div 
         id="invoice-content"
-        className="bg-white text-black p-8 sm:p-10 shadow-md rounded-lg print:hidden flex flex-col min-h-[800px] relative overflow-hidden"
+        className="bg-white text-black p-4 sm:p-8 shadow-md rounded-lg print:hidden overflow-x-auto"
       >
+        <div className="min-w-[700px] flex flex-col min-h-[800px] relative">
         <div className="flex justify-between items-start mb-6 z-10 relative">
           <div className="flex gap-4">
             <img src="/logo-2.png" alt="Company Logo" className="h-16 object-contain" />
@@ -397,6 +398,7 @@ export const InvoiceView = () => {
             </div>
           </div>
         </div>
+        </div>
       </div>
 
       {/* 
@@ -509,7 +511,7 @@ export const InvoiceView = () => {
 
             {/* Footer ONLY on the last page */}
             {pageIndex === pdfChunks.length - 1 && (
-              <div className="mt-2 z-10 relative flex flex-col flex-1">
+              <div className="mt-2 z-10 relative flex flex-col flex-1 print:break-inside-avoid">
                 {/* Charges Summary Table */}
                 <div className="mb-2">
                   <h3 className="font-bold text-sm mb-1">Charges Summary</h3>
