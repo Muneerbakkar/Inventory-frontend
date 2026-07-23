@@ -115,9 +115,9 @@ export const Sidebar = ({ isOpen, setIsOpen }) => {
       )}>
         <div className="flex h-16 items-center justify-between border-b px-6">
           <div className="flex items-center gap-2.5">
-            <img src="/logo.png" alt="INVENQ logo" className="h-10 w-10 rounded-md" />
+            <img src="/logo.png" alt="Archie logo" className="h-10 w-10 rounded-md" />
             <h1 className="text-xl font-bold text-foreground tracking-tight">
-              INVENQ
+              Archie
             </h1>
           </div>
           <button 

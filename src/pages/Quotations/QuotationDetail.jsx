@@ -43,14 +43,14 @@ export const QuotationDetail = () => {
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-black print:p-0 print:border-none print:shadow-none print:bg-transparent">
         <div className="flex justify-between items-start mb-6">
           <div className="flex gap-4">
-            <img src="/logo.png" alt="Company Logo" className="h-16 object-contain" />
+            <img src="/logo-2.png" alt="Company Logo" className="h-16 object-contain" />
             <div>
               <h1 className="text-xl font-bold text-black mb-1">{settings?.name || "YOUR COMPANY PVT. LTD."}</h1>
               {settings?.address ? (
                 <p className="whitespace-pre-wrap text-sm text-gray-700 max-w-sm">{settings.address}</p>
               ) : (
                 <>
-                  <p className="font-bold text-sm mb-1">INVENQ</p>
+                  <p className="font-bold text-sm mb-1">Archie</p>
                   <p className="text-sm">Room No: 122, Building Name, 1st Floor</p>
                   <p className="text-sm">Main Road, City, State - 123456</p>
                   <p className="text-sm">Phone: +91 98765 43210 | Email: info@yourcompany.com</p>

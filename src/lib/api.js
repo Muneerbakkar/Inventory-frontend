@@ -17,10 +17,14 @@ const fetchWithAuth = async (url, options = {}) => {
     headers,
   });
 
-  const data = await response.json();
+  let data = null;
+  // 204 No Content responses have no body, so response.json() would throw an error
+  if (response.status !== 204) {
+    data = await response.json();
+  }
 
   if (!response.ok) {
-    const error = new Error(data.message || 'Something went wrong');
+    const error = new Error(data?.message || 'Something went wrong');
     error.response = { data };
     error.status = response.status;
     throw error;

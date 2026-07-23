@@ -108,19 +108,29 @@
 
 @media print {
   @page {
-    margin: 0.5cm;
+    size: A4;
+    margin: 0;
+  }
+  
+  /* Slightly scale down the layout so it doesn't feel overly massive/edge-to-edge */
+  .pdf-render-page {
+    zoom: 0.96 !important;
+    margin: 0 auto !important;
   }
   body, html, #root {
     margin: 0 !important;
     padding: 0 !important;
     background-color: white !important;
-    color: black !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
   * {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
+    text-rendering: optimizeSpeed !important;
+    font-variant-ligatures: none !important;
+    font-feature-settings: "kern" 0 !important;
+    letter-spacing: normal !important;
   }
 }
 
